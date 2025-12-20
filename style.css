@@ -120,118 +120,252 @@ header {
     .studio-grid { grid-template-columns: 1fr; }
 }
 
-/* Auth Pages Styles */
+/* Auth Pages Styles - Login Page PhotoHunt */
 .auth-body {
   margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  height: 100vh;
+  padding: 0;
+  background: linear-gradient(135deg, #020618 0%, #dad6df 100%);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
 
 .auth-container {
   background: white;
-  padding: 40px 30px;
+  padding: 20px 25px;
   border-radius: 16px;
   width: 90%;
   max-width: 380px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: none;
 }
 
 .auth-header h1 {
   margin: 0 0 8px;
   font-size: 28px;
+  font-weight: 700;
+  color: #333;
 }
 
 .auth-header p {
   color: #666;
   font-size: 14px;
   margin-bottom: 30px;
+  line-height: 1.5;
 }
 
+/* Role Tabs: Pengguna & Mitra */
 .role-tabs {
   display: flex;
   background: #f0f0f0;
   border-radius: 12px;
   overflow: hidden;
   margin: 20px 0;
+  padding: 4px;
 }
 
 .role-tab {
   flex: 1;
-  padding: 12px;
+  padding: 14px;
   border: none;
   background: transparent;
   font-size: 16px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 10px;
 }
 
 .role-tab.active {
   background: #000;
   color: white;
-  border-radius: 10px;
-  margin: 4px;
 }
 
-form input, form select {
+/* Form Input */
+form input {
   width: 100%;
-  padding: 14px;
-  margin: 10px 0;
+  padding: 16px 14px;
+  margin: 5px 0;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 16px;
+  box-sizing: border-box;
+  background-color: #fff;
 }
 
+form input::placeholder {
+  color: #aaa;
+}
+
+/* Tombol Login */
 .btn-primary {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   background: #000;
   color: white;
   border: none;
   border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
-  margin: 15px 0;
+  margin: 20px 0 10px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
+.btn-primary:hover {
+  background: #333;
+}
+
+/* Teks "DON'T HAVE AN ACCOUNT?" */
+.auth-subtitle {
+  color: #888;
+  font-size: 14px;
+  margin: 20px 0 10px;
+}
+
+/* Tombol Sign up with email */
 .btn-secondary {
   display: block;
-  width: 100%;
-  padding: 14px;
+  width: 90%;
+  padding: 16px;
   background: #f8f9fa;
   color: #000;
   text-decoration: none;
   border-radius: 10px;
+  font-size: 16px;
   font-weight: bold;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
 }
 
+.btn-secondary:hover {
+  background: #eee;
+}
+
+/* Divider "or continue with" */
+.auth-divider {
+  margin: 25px 0;
+  color: #888;
+  font-size: 14px;
+  position: relative;
+}
+
+.auth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ddd;
+  z-index: 0;
+}
+
+.auth-divider span {
+  background: white;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Tombol Continue with Google */
 .btn-google {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
 }
 
-.auth-divider {
-  margin: 25px 0;
-  color: #888;
-  font-size: 14px;
+.btn-google:hover {
+  background: #f9f9f9;
+  border-color: #ccc;
 }
 
+.btn-google img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Terms & Privacy */
 .terms {
   font-size: 12px;
   color: #888;
-  margin-top: 20px;
+  margin-top: 25px;
+  line-height: 1.5;
+}
+
+.terms a {
+  color: #667eea;
+  text-decoration: underline;
+}
+
+/* Fix tulisan role jadi sejajar dengan bulatan, tidak kebawah */
+.role-selection {
+  text-align: left;
+  margin: 30px 0;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;     /* Bikin bulatan & tulisan center vertikal */
+  margin: 18px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+.role-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.role-option .radio-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.role-option input[type="radio"]:checked + .radio-custom {
+  border-color: #000;
+}
+
+.role-option input[type="radio"]:checked + .radio-custom::after {
+  content: '';
+  width: 13px;
+  height: 13px;
+  background: #000;
+  border-radius: 50%;
+}
+
+/* Override kalau ada CSS lama yang bikin label block */
+.role-selection label {
+  display: flex !important;   /* Paksa flex biar sejajar */
+  margin: 0;
 }
 
 .role-selection label {
@@ -241,6 +375,7 @@ form input, form select {
   font-size: 15px;
 }
 
+
 .category-tabs {
     display: flex;
     background: rgba(255, 255, 255, 0.25);
@@ -248,7 +383,7 @@ form input, form select {
     border-radius: 50px;
     padding: 8px;
     gap: 10px;
-    margin: 5px 200px;
+    margin: 5px 60px;
 }
 
 .category-tab {
@@ -276,7 +411,6 @@ form input, form select {
 
 .category-tab:hover:not(.active) {
     background: rgba(255,255,255,0.15);
-
 
 .profile-page {
     background: #f5f5f5;
@@ -370,6 +504,7 @@ form input, form select {
     border: none;
     border-top: 1px solid #e5e7eb;
 }
+
 
 @media (max-width: 768px) {
     .profile-form {

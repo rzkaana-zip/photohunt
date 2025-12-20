@@ -20,9 +20,18 @@
       <input type="password" placeholder="Password" required minlength="6" />
 
       <div class="role-selection">
-        <label><input type="radio" name="role" value="pengguna" checked> Pengguna (Customer)</label>
-        <label><input type="radio" name="role" value="mitra"> Mitra (Pemilik Studio)</label>
-      </div>
+  <label class="role-option">
+    <input type="radio" name="role" value="pengguna" checked>
+    <span class="radio-custom"></span>
+    Pengguna (Customer)
+  </label>
+
+  <label class="role-option">
+    <input type="radio" name="role" value="mitra">
+    <span class="radio-custom"></span>
+    Mitra (Pemilik Studio)
+  </label>
+</div>
 
       <button type="submit" class="btn-primary">Continue</button>
     </form>
