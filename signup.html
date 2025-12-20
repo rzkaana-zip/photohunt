@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoHunt - Buat Akun</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+  <div class="auth-container">
+    <div class="auth-header">
+      <h1>PhotoHunt (camera icon)</h1>
+      <p>Enter your email to sign up for this app</p>
+    </div>
+
+    <form id="signupForm">
+      <input type="text" placeholder="Nama lengkap" required />
+      <input type="tel" placeholder="Nomor Telepon" required />
+      <input type="email" placeholder="email@domain.com" required />
+      <input type="password" placeholder="Password" required minlength="6" />
+
+      <div class="role-selection">
+        <label><input type="radio" name="role" value="pengguna" checked> Pengguna (Customer)</label>
+        <label><input type="radio" name="role" value="mitra"> Mitra (Pemilik Studio)</label>
+      </div>
+
+      <button type="submit" class="btn-primary">Continue</button>
+    </form>
+
+    <p class="terms" style="margin-top: 30px;">
+      By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+    </p>
+
+    <p style="margin-top: 40px;">
+      <a href="login.html">← Back to Login</a>
+    </p>
+  </div>
+
+  <script src="auth.js"></script>
+</body>
+</html>

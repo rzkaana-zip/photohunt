@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="id"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoHunt - Cari & Booking Photobox/Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">PhotoHunt (camera)</div>
+
+        <div class="header-icons">
+            <button id="profileBtn">Profile</button>
+            <button id="cart">Cart</button>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Role Switch (Customer/Owner)
+        <div class="role-switch">
+            <button id="customerBtn" class="role-btn active">Pelanggan</button>
+            <button id="ownerBtn" class="role-btn">Pemilik Studio</button>
+        </div> -->
+
+        <!-- Customer View: Search & Results -->
+         
+         <div class="category-tabs">
+            <button class="category-tab active" data-type="photobox">
+            Photobox
+             </button>
+             <button class="category-tab" data-type="photostudio">
+            Photostudio
+             </button>
+        </div>
+
+        <section id="customerView">
+            <div class="search-bar">
+                <div class="search-inputs">
+                    <div class="input-group">
+                        <label>📍 Lokasi</label>
+                        <input type="text" id="location" placeholder="Bekasi, Jakarta..." value="Jakarta">
+                    </div>
+                    <div class="input-group">
+                        <label>📅 Tanggal</label>
+                        <input type="date" id="date" value="2025-10-18">
+                    </div>
+                    <div class="input-group">
+                        <label>👥 Orang</label>
+                        <select id="participants">
+                            <option>1</option>
+                            <option selected>2</option>
+                            <option>3+</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="searchBtn">🔍 Cari</button>
+            </div>
+            
+            <h3>Yuk, cek studio yang cocok denganmu!</h3>
+            <div class="filters">
+                <button class="filter-chip active" data-location="all">Semua</button>
+                <button class="filter-chip" data-location="bekasi">Bekasi</button>
+                <button class="filter-chip" data-location="jakarta">Jakarta</button>
+                <button class="filter-chip" data-location="tangerang">Tangerang</button>
+                <button class="filter-chip" data-location="depok">Depok</button>
+            </div>
+
+            <div id="results" class="studio-grid">
+            </div>
+        </section>
+
+        <!-- Owner View: Apply Form -->
+        <section id="ownerView" style="display: none;">
+            <h2>Daftar Studio Anda di PhotoHunt</h2>
+            <form id="applyForm">
+                <input type="text" placeholder="Nama Studio" required>
+                <input type="text" placeholder="Lokasi (e.g., Bekasi)" required>
+                <textarea placeholder="Deskripsi & Fasilitas" required></textarea>
+                <input type="file" id="studioPhoto" multiple accept="image/*" required>
+                <input type="email" placeholder="Email Kontak" required>
+                <button type="submit">Kirim Aplikasi</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Modal for Studio Detail/Reservation -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody">
+                <!-- Dynamic content: Photos, details, booking form -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

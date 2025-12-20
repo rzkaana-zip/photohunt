@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoHunt Mitra</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-body" style="background: linear-gradient(135deg, #1e3c72, #2a5298); color:white;">
+  <div class="container" style="text-align:center; padding:50px 20px;">
+    <h1>PhotoHunt Mitra</h1>
+    <h2>Selamat datang, <span id="mitraName"></span>!</h2>
+    <p>Dashboard pemilik studio kamu sedang dalam pengembangan</p>
+
+    <div style="margin:40px 0;">
+      <a href="apply-studio.html" class="btn-primary" style="display:inline-block; padding:15px 30px; background:#fff; color:#000; border-radius:12px; text-decoration:none; font-weight:bold;">
+        + Daftarkan Studio Baru
+      </a>
+    </div>
+
+    <button onclick="logout()" class="btn-primary" style="background:#ff4444;">
+      Logout
+    </button>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user || user.role !== 'mitra') {
+      window.location.href = 'login.html';
+    }
+    document.getElementById('mitraName').textContent = user.name;
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
