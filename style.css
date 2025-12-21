@@ -314,7 +314,6 @@ form input::placeholder {
   text-decoration: underline;
 }
 
-/* Fix tulisan role jadi sejajar dengan bulatan, tidak kebawah */
 .role-selection {
   text-align: left;
   margin: 30px 0;
@@ -322,8 +321,7 @@ form input::placeholder {
 
 .role-option {
   display: flex;
-  align-items: center;     /* Bikin bulatan & tulisan center vertikal */
-  margin: 18px 0;
+  align-items: center;   
   font-size: 16px;
   font-weight: 500;
   color: #333;
@@ -362,9 +360,8 @@ form input::placeholder {
   border-radius: 50%;
 }
 
-/* Override kalau ada CSS lama yang bikin label block */
 .role-selection label {
-  display: flex !important;   /* Paksa flex biar sejajar */
+  display: flex !important;   
   margin: 0;
 }
 
