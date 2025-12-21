@@ -1,53 +1,102 @@
 <!DOCTYPE html>
-<html lang="id"> 
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoHunt - Cari & Booking Photobox/Studio</title>
+    <title>Kelola Profil - PhotoHunt</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
-        <div class="logo">PhotoHunt (camera)
-            <h6>Anda dapat mengubah informasi dan password akun anda kapan saja</h6>
+
+<body class="page-profile">
+
+<header>
+    <button class="back-btn" onclick="history.back()">←</button>
+    <div class="logo" style="display:inline;">PhotoHunt (camera)</div>
+</header>
+
+<main>
+    <section class="profile-card">
+        <div class="header-kelolaprofile">
+          <div>
+            <h2>Kelola Profil</h2>
+            <p>Anda dapat mengubah informasi dan password akun anda kapan saja</p>
+          </div>
         </div>
+        <div class="profile-header">
+            <img src="profile.jpg" alt="Profile Picture">
+            <div>
+                <h3>Emma Collins</h3>
+                <p>emma.collins@gmail.com</p>
+                <a href="#">Change Profile</a>
+            </div>
         </div>
-    </header>
 
-    <main>
-        <div class="profile-page">
-  <div class="profile-card">
+        <h2>Profile Info</h2>
 
-    <div class="profile-header">
-      <img src="profile.jpg" alt="Profile">
-      <div>
-        <h3>Emma Collins</h3>
-        <p>emma.collins@gmail.com</p>
-        <a href="#">Change Profile</a>
-      </div>
-    </div>
+        <div class="profile-form">
+            <div>
+                <label>FIRST NAME *</label>
+                <input type="text" value="Emma Collins">
+            </div>
 
-    <h2>Profile Info</h2>
+            <div>
+                <label>USERNAME *</label>
+                <input type="text" value="emmacollins">
+            </div>
 
-    <div class="profile-form">
-      <!-- input input -->
-    </div>
+            <div>
+                <label>EMAIL *</label>
+                <input type="email" value="emma.collins@gmail.com">
+            </div>
 
-    <button class="profile-btn">SAVE CHANGES</button>
+            <div>
+                <label>LOCATION</label>
+                <input type="text" value="Indonesia">
+            </div>
+            <div>
+              <label>GENDER</label>
+              <select>
+                <option value="">Select gender</option>
+                <option>Female</option>
+                <option>Male</option>
+              </select>
+            </div>
+            <div>
+              <label>BIRTHDAY</label>
+              <input type="date">
+            </div>
 
-    <hr>
+        </div>
 
-    <h2>Change Password</h2>
+        <button class="profile-btn">SAVE CHANGES</button>
 
-    <div class="profile-form">
-      <!-- password inputs -->
-    </div>
+        <hr>
 
-    <button class="profile-btn">SAVE CHANGES</button>
+        <h2>Change Password</h2>
 
-  </div>
-</div>
+        <div class="profile-form">
+            <div>
+                <label>CURRENT PASSWORD</label>
+                <input type="password">
+            </div>
 
-    <script src="app.js"></script>
+            <div>
+                <label>NEW PASSWORD</label>
+                <input type="password">
+            </div>
+
+            <div>
+                <label>CONFIRM PASSWORD</label>
+                <input type="password">
+            </div>
+        </div>
+
+        <button class="profile-btn">SAVE CHANGES</button>
+        
+        <h5 align="center">You will be asked to log in again with your new password after you save your changes.</h5>
+    </section>
+
+</main>
+
 </body>
 </html>
