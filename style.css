@@ -31,9 +31,17 @@ header {
 .search-bar {
     background: white;
     padding: 20px;
-    margin: 0 250px;
+    margin: 0 350px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.date-people {
+  display: flex;
+  gap: 12px
+}
+.date-people .input-group{
+  flex: 1;
 }
 
 .search-inputs { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -41,7 +49,7 @@ header {
 .input-group label { display: block; font-size: 0.8em; color: #666; }
 .input-group input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
 
-#searchBtn { background: #007BFF; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; }
+#searchBtn { background: #007BFF; color: white; border: none; padding: 10px 20px; margin-top: 10px; border-radius: 5px; cursor: pointer; width: 100%; }
 
 .filters {
     display: flex;
@@ -380,7 +388,7 @@ form input::placeholder {
     border-radius: 50px;
     padding: 8px;
     gap: 10px;
-    margin: 5px 60px;
+    margin: 5px 300px;
 }
 
 .category-tab {
