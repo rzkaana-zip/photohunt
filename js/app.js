@@ -127,6 +127,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const store = transaction.objectStore('studios');
     const request = store.get(id);
 
+        // === MODAL FUNCTIONS ===
+    const closeBtn = document.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+        console.log('✅ Close button event listener attached');
+    }
+    
+    window.addEventListener('click', (event) => {
+        const modal = document.getElementById('modal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close modal dengan ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    function showModal(studio) {
+        
+        const newCloseBtn = body.querySelector('.close');
+        if (newCloseBtn) {
+            newCloseBtn.addEventListener('click', closeModal);
+            console.log('✅ Modal close button re-attached');
+        }
+        
+        modal.style.display = 'block';
+    }
+
     request.onsuccess = () => {
         const studio = request.result;
         const modal = document.getElementById('modal');
