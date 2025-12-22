@@ -26,51 +26,136 @@ document.addEventListener('DOMContentLoaded', () => {
     // === DATABASE SETUP ===
     let db;
     const dbName = 'PhotoHuntDB';
-    const dbVersion = 1;
+    const dbVersion = 2;
 
     const sampleStudios = [
-        { id: 1, type: 'photostudio', name: 'Selfie Time, Mall Pulo Gadung', location: 'Jakarta', capacity: 4, photos: ['images/selfietime.jpeg'], description: 'Studio selfie modern.' },
-        { id: 2, type: 'photostudio', name: 'Dirtyline Studio, Tambun', location: 'Bekasi', capacity: 6, photos: ['https://via.placeholder.com/400x300/4ECDC4/FFFFFF?text=Dirtyline'], description: 'Ruang foto kreatif.' },
-        { id: 3, type: 'photobox',   name: 'Angel Photobox, Bekasi Timur', location: 'Bekasi', capacity: 2, photos: ['https://via.placeholder.com/400x300/45B7D1/FFFFFF?text=Angel'], description: 'Photobox cepat & murah.' },
-        { id: 4, type: 'photobox',   name: 'Kawaii Box, Pantai Indah Kapuk', location: 'Jakarta', capacity: 3, photos: ['https://via.placeholder.com/400x300/FFA07A/FFFFFF?text=Kawaii'], description: 'Tema Jepang lucu.' }
-    ];
+    {
+        id: 1,
+        type: 'photostudio',
+        name: 'Selfie Time, Mall Pulo Gadung',
+        location: 'Jakarta',
+        capacity: 4,
+        photos: [
+            'images/selfietime.jpg',
+            'images/selfietime2.jpg',
+            'images/selfietime3.jpg'
+        ],
+        description: 'Studio selfie modern.'
+    },
+    {
+        id: 2,
+        type: 'photostudio',
+        name: 'Dirtyline Studio, Tambun',
+        location: 'Bekasi',
+        capacity: 6,
+        photos: [
+            'images/dirtyline1.jpg',
+            'images/dirtyline2.jpg'
+        ],
+        description: 'Ruang foto kreatif.'
+    },
+    {
+        id: 3,
+        type: 'photobox',
+        name: 'Angel Photobox, Bekasi Timur',
+        location: 'Bekasi',
+        capacity: 2,
+        photos: [
+            'images/angel1.jpg'
+        ],
+        description: 'Photobox cepat & murah.'
+    },
+    {
+        id: 4,
+        type: 'photobox',
+        name: 'Kawaii Box, Pantai Indah Kapuk',
+        location: 'Jakarta',
+        capacity: 3,
+        photos: [
+            'images/kawaii1.jpg',
+            'images/kawaii2.jpg'
+        ],
+        description: 'Tema Jepang lucu.'
+    }
+];
+
 
     function initDB() {
         const request = indexedDB.open(dbName, dbVersion);
         request.onsuccess = (e) => { db = e.target.result; loadStudios(); };
         request.onupgradeneeded = (e) => {
-            db = e.target.result;
-            db.createObjectStore('studios', { keyPath: 'id' });
+        db = e.target.result;
+
+        if (!db.objectStoreNames.contains('studios')) {
             const store = db.createObjectStore('studios', { keyPath: 'id' });
-            sampleStudios.forEach(s => store.add(s)); 
+            sampleStudios.forEach(s => store.add(s));
+        }
         };
+
     }
 
     function loadStudios() {
-        const transaction = db.transaction(['studios'], 'readonly');
-        const store = transaction.objectStore('studios');
-        const request = store.getAll();
+    const transaction = db.transaction(['studios'], 'readonly');
+    const store = transaction.objectStore('studios');
+    const request = store.getAll();
 
-        request.onsuccess = () => {
-            const filtered = request.result.filter(s => s.type === currentCategory);
-            const grid = document.getElementById('results');
-            if (filtered.length === 0) {
-                grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#999;margin:40px;">Belum ada ${currentCategory} di daerah ini</p>`;
-                return;
-            }
-            grid.innerHTML = filtered.map(studio => `
-                <div class="studio-card" onclick="openModal(${studio.id})">
-                    <img src="${studio.photos[0]}" alt="${studio.name}">
-                    <div class="studio-info">
-                        <h3>${studio.name}</h3>
-                        <p>${studio.location} • Kapasitas ${studio.capacity} orang</p>
-                    </div>
+    request.onsuccess = () => {
+        const filtered = request.result.filter(s => s.type === currentCategory);
+        const grid = document.getElementById('results');
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `
+                <p style="grid-column:1/-1;text-align:center;color:#999;margin:40px;">
+                    Belum ada ${currentCategory}
+                </p>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(studio => `
+            <div class="studio-card" onclick="openModal(${studio.id})">
+                <img src="${studio.photos[0]}" alt="${studio.name}">
+                <div class="studio-info">
+                    <h3>${studio.name}</h3>
+                    <p>${studio.location} • ${studio.capacity} orang</p>
                 </div>
-            `).join('');
-        };
-    }
+            </div>
+        `).join('');
+    };
+}
+    window.openModal = (id) => {
+    const transaction = db.transaction(['studios'], 'readonly');
+    const store = transaction.objectStore('studios');
+    const request = store.get(id);
 
-    window.openModal = (id) => {  };
+    request.onsuccess = () => {
+        const studio = request.result;
+        const modal = document.getElementById('modal');
+        const body = document.getElementById('modalBody');
+
+        body.innerHTML = `
+            <h2>${studio.name}</h2>
+            <p>${studio.description}</p>
+
+            <div style="display:flex;gap:10px;overflow-x:auto;margin:15px 0;">
+                ${studio.photos.map(p => `
+                    <img src="${p}" style="height:160px;border-radius:10px;">
+                `).join('')}
+            </div>
+
+            <button onclick="makeBooking(${studio.id})"
+                style="width:100%;padding:12px;border:none;background:#000;color:white;border-radius:8px;cursor:pointer;">
+                Booking Sekarang
+            </button>
+        `;
+
+        modal.style.display = 'block';
+    };
+};
+
+window.closeModal = () => {
+    document.getElementById('modal').style.display = 'none';
+};
+
     window.makeBooking = (id) => { };
 
     // === LOGOUT ===
