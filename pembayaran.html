@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifikasi - PhotoHunt</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+    <button class="back-btn" onclick="history.back()">←</button>
+    <div class="logo" style="display:inline;">PhotoHunt (camera)</div>
+</header>
+
+<main>
+    <section class="countdown">
+        <div class="warning" color="red">
+            <h3>Selesaikan pembayaran dalam:</h3>
+            <h4>Reservasi akan dibatalkan otomatis jika waktu habis</h4>
+        </div>
+        <div class="clock">
+            <div id="timer">15:00</div>
+            <p>Tuntaskan pembayaran anda sebelum 13:15</p>
+        </div>
+    </section>
+    <section class="paymentmethod">
+        <h2>Metode Pembayaran</h2>
+        <div class="bank">
+            <div class="banks" id="banks">
+                <span id="selected">Pilih Bank</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="banks-box">
+                <div class="option">BCA</div>
+                <div class="option">Mandiri</div>
+            </div>
+            <div class="instruction">
+                <h3>Instuksi Pembayaran</h3>
+                <h3>Transfer Bank (Buka App Secara Manual)</h3>
+                <ol>
+                    <li>Lakukan pembayaran sesuai total yang tertera</li>
+                    <li>Simpan bukti pembayaran</li>
+                    <li>Klik tombol “Saya Sudah Bayar</li>
+                    <li>Tunggu konfirmasi dari mitra studio</li>
+                </ol>
+            </div>
+        </div>
+        <div class="e-wallet">
+            <div class="QR">
+                <span id="selected">QRIS</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="QR-box">
+                <img src="profile.jpg" alt="QRIS">
+            </div>
+            <div class="instruction">
+                <h3>Instuksi Pembayaran</h3>
+                <h3>Transfer Bank (Buka App Secara Manual)</h3>
+                <ol>
+                    <li>Lakukan pembayaran sesuai total yang tertera</li>
+                    <li>Simpan bukti pembayaran</li>
+                    <li>Klik tombol “Saya Sudah Bayar</li>
+                    <li>Tunggu konfirmasi dari mitra studio</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <section class="summarize">
+        <h2>Ringkasan Pesanan</h2>
+        <label>Studio:</label>
+        <h3>Selfie Time, Mal Lippo Cikarang</h3>
+        <label>Paket:</label>
+        <h3>Paket Group</h3>
+        <label>Tanggal & Waktu:</label>
+        <h3>11/12/2025</h3>
+        <h3>11:00</h3>
+        <label>Kapasitas:</label>
+        <h3>1 Orang</h3>
+
+        <hr>
+        
+        <div class="totaldetails">
+            <label>Harga Paket</label>
+            <label>Biaya Tambahan</label>
+        </div>
+         
+        <hr>
+        <div class="totals">
+            <h3>Total:</h3>
+            <h2>Rp. 75.000</h2>
+        </div>
+        <button class="button">SAYA SUDAH BAYAR</button>
+        <p class="disclaimer">Dengan melanjutkan, Anda menyetujui syarat dan ketentuan yang berlaku.</p>
+    </section>
+</main>
+</body>
+</html>

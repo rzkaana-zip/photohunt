@@ -466,7 +466,7 @@ form input::placeholder {
 
 .page-profile .profile-form {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 🔥 FIX UTAMA */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px 22px;
 }
 
@@ -548,4 +548,72 @@ form input::placeholder {
     .page-profile .profile-form {
         grid-template-columns: 1fr;
     }
+}
+
+.page-notifikasi {
+  background: #f3f4f6;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.page-notifikasi .notifikasi-header-top {
+    background: linear-gradient(to bottom, #4b4b4b, rgba(255,255,255,0));
+    padding: 20px 40px 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: white;
+}
+
+.page-notifikasi .back-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
+.page-notifikasi main {
+    padding: 0 20px 60px;
+}
+
+.page-notifikasi .notifikasi-card {
+    max-width: 900px;
+    margin: 40px auto 0;
+    background: white;
+    border-radius: 14px;
+    padding: 35px 45px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.page-notifikasi .page-notifications {
+
+}
+
+.page-notifikasi .page-notifications .wait {
+  max-width: 1700px;
+  margin: 2px auto 0;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 2px 2px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  
+}
+
+.page-notifikasi .page-notifications .wait .contains {
+  
+}
+
+.contains p {
+  color:#333
+
+}
+
+.contains p.date{
+  color:#000
 }
