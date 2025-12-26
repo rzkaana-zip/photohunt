@@ -43,7 +43,9 @@
                         <label>📍 Lokasi</label>
                         <input type="text" id="location" placeholder="Bekasi, Jakarta..." value="Jakarta">
                     </div>
-                    <div class="input-group">
+                </div>
+            <div class="date-people">
+                <div class="input-group">
                         <label>📅 Tanggal</label>
                         <input type="date" id="date" value="2025-10-18">
                     </div>
@@ -56,10 +58,10 @@
                         </select>
                     </div>
                 </div>
-                <button id="searchBtn">🔍 Cari</button>
+                <button id="searchBtn">🔍   Cari... </button>
             </div>
             
-            <h3>Yuk, cek studio yang cocok denganmu!</h3>
+            <h3 class="search-studio-title" >Yuk, cek studio yang cocok denganmu!</h3>
             <div class="filters">
                 <button class="filter-chip active" data-location="all">Semua</button>
                 <button class="filter-chip" data-location="bekasi">Bekasi</button>
@@ -91,11 +93,10 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <div id="modalBody">
-                <!-- Dynamic content: Photos, details, booking form -->
             </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="js/app.js" defer></script>
 </body>
 </html>

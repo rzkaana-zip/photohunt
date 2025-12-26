@@ -92,3 +92,34 @@ if (loginForm) {
         });
     });
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+        const user = JSON.parse(currentUser);
+        
+        if (window.location.pathname.includes('logout.html') || 
+            window.location.pathname.includes('error.html')) {
+            return;
+        }
+        
+        // Redirect sesuai role
+        if (user.role === 'mitra') {
+            if (!window.location.pathname.includes('mitra-dashboard.html')) {
+                window.location.href = 'mitra-dashboard.html';
+            }
+        } else {
+            if (!window.location.pathname.includes('customer-app.html') && 
+                !window.location.pathname.includes('profile.html')) {
+                window.location.href = 'customer-app.html';
+            }
+        }
+    }
+});
+
+window.logout = function() {
+    if (confirm('Apakah Anda yakin ingin logout?')) {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+    }
+};
