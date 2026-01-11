@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftarkan Studio - Mitra</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+    <style>
+      .daftarkan-mitra {
+        --primary: #000000;
+        --primary-hover: #333333;
+        --border: #d1d5dc;
+        --bg-light: #f9fafb;
+        --danger: #ef4444;
+        --radius: 10px;
+      }
+
+      .daftrarkan-mitra * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .daftarkan-mitra body {
+        font-family: "Inter", sans-serif;
+        background: #f3f4f6;
+        color: #1f2937;
+        line-height: 1.5;
+        padding: 40px 20px;
+      }
+
+      .mitra-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .mitra-header-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .mitra-header-desc {
+        color: #6b7280;
+      }
+
+      .dm-form-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        padding: 32px;
+      }
+
+      .dm-stepper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+        position: relative;
+      }
+
+      .dm-step-item {
+        display: flex;
+        align-items: center;
+      }
+
+      .dm-step-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--border);
+        color: #9ca3af;
+        font-weight: 600;
+        background: #fff;
+        transition: all 0.3s;
+        z-index: 2;
+      }
+
+      .dm-step-circle.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .dm-step-line {
+        width: 50px;
+        height: 3px;
+        background: var(--border);
+        margin: 0 4px;
+      }
+      .dm-step-line.active {
+        background: var(--primary);
+      }
+      .dm-step {
+        display: none;
+        animation: fadeIn 0.4s ease;
+      }
+      .dm-step.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .dm-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .dm-field-group {
+        margin-bottom: 20px;
+      }
+      .dm-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .dm-input,
+      .dm-textarea,
+      .dm-select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 15px;
+        font-family: inherit;
+        transition: border-color 0.2s;
+        background: #fff;
+      }
+      .dm-input:focus,
+      .dm-textarea:focus,
+      .dm-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+      }
+      .dm-textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .dm-grid-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .dm-radio-group {
+        display: flex;
+        gap: 12px;
+      }
+      .dm-radio-group input {
+        display: none;
+      }
+      .dm-radio-btn {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .dm-radio-group input:checked + .dm-radio-btn {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+
+      .dm-dynamic-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .dm-action-btn {
+        width: 48px;
+        flex-shrink: 0;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-size: 18px;
+      }
+      .dm-action-btn.remove {
+        background: var(--danger);
+      }
+      #image-preview-container {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+      }
+      .img-preview-wrapper {
+        position: relative;
+        width: 90px;
+        height: 90px;
+      }
+      .img-preview-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+      }
+      .img-remove-btn {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--danger);
+        color: white;
+        border: 2px solid #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s;
+      }
+      .img-remove-btn:hover {
+        transform: scale(1.1);
+      }
+      .image-counter-text {
+        font-size: 13px;
+        color: #666;
+        margin-top: 5px;
+      }
+      .image-error-msg {
+        color: var(--danger);
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .dm-schedule-item {
+        background: var(--bg-light);
+        padding: 16px;
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .dm-schedule-inputs {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .dm-btn-copy {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--primary);
+        background: none;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .dm-package-card {
+        border: 1px solid #e5e7eb;
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        background: #fff;
+      }
+      .dm-btn-dashed {
+        width: 100%;
+        border: 2px dashed var(--border);
+        background: transparent;
+        padding: 14px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        color: #6b7280;
+        font-weight: 500;
+        transition: 0.2s;
+      }
+      .dm-btn-dashed:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .dm-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 24px;
+      }
+      .dm-btn-back {
+        padding: 12px 24px;
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .dm-btn-next {
+        padding: 12px 32px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .dm-btn-next:hover {
+        background: var(--primary-hover);
+      }
+
+      @media (max-width: 600px) {
+        .dm-grid-row {
+          grid-template-columns: 1fr;
+        }
+        .dm-schedule-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .dm-schedule-inputs {
+          width: 100%;
+        }
+        .dm-time {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="daftarkan-mitra">
+      <div class="mitra-header">
+        <h1 class="mitra-header-title">Daftarkan Studio Anda</h1>
+        <p class="mitra-header-desc">
+          Lengkapi data untuk mulai menyewakan studio
+        </p>
+      </div>
+
+      <form
+        id="form-daftar-mitra"
+        class="dm-form-wrapper"
+        onsubmit="handleFinalSubmit(event)"
+      >
+        <div class="dm-stepper">
+          <div class="dm-step-item">
+            <div class="dm-step-circle active">1</div>
+            <div class="dm-step-line"></div>
+          </div>
+          <div class="dm-step-item">
+            <div class="dm-step-circle">2</div>
+            <div class="dm-step-line"></div>
+          </div>
+          <div class="dm-step-item">
+            <div class="dm-step-circle">3</div>
+            <div class="dm-step-line"></div>
+          </div>
+          <div class="dm-step-item"><div class="dm-step-circle">4</div></div>
+        </div>
+
+        <section class="dm-step active">
+          <h2 class="dm-section-title">Informasi Dasar Studio</h2>
+
+          <div class="dm-field-group">
+            <label class="dm-label">Nama Studio *</label>
+            <input
+              class="dm-input"
+              name="studio_name"
+              placeholder="Contoh: Studio PhotoBox Bekasi"
+              required
+            />
+          </div>
+
+          <div class="dm-field-group">
+            <label class="dm-label">Tipe Studio *</label>
+            <div class="dm-radio-group">
+              <input
+                type="radio"
+                id="t1"
+                name="studio_type"
+                value="photobox"
+                checked
+              /><label for="t1" class="dm-radio-btn">PhotoBox</label>
+              <input
+                type="radio"
+                id="t2"
+                name="studio_type"
+                value="photostudio"
+              /><label for="t2" class="dm-radio-btn">PhotoStudio</label>
+            </div>
+          </div>
+
+          <div class="dm-field-group">
+            <label class="dm-label">Deskripsi Studio *</label>
+            <textarea
+              class="dm-textarea"
+              name="description"
+              placeholder="Jelaskan fasilitas dan keunggulan studio..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="dm-field-group">
+            <label for="dm_addr" class="dm-label">Alamat Lengkap *</label>
+            <textarea
+              id="dm_addr"
+              name="address"
+              class="dm-textarea"
+              style="min-height: 100px"
+              placeholder="Jl. Contoh No. 123, Bekasi Timur..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="dm-field-group">
+            <label for="dm_city" class="dm-label">Kota *</label>
+            <select id="dm_city" name="city" class="dm-select" required>
+              <option value="" disabled selected>Pilih Kota</option>
+              <option value="bekasi">Bekasi</option>
+              <option value="jakarta">Jakarta</option>
+              <option value="bandung">Bandung</option>
+              <option value="tangerang">Tangerang</option>
+              <option value="depok">Depok</option>
+              <option value="bogor">Bogor</option>
+            </select>
+          </div>
+
+          <div class="dm-grid-row">
+            <div class="dm-field-group">
+              <label for="dm_lat" class="dm-label">Latitude</label>
+              <input
+                type="number"
+                step="any"
+                id="dm_lat"
+                name="latitude"
+                class="dm-input"
+                placeholder="-6.2349"
+              />
+            </div>
+            <div class="dm-field-group">
+              <label for="dm_long" class="dm-label">Longitude</label>
+              <input
+                type="number"
+                step="any"
+                id="dm_long"
+                name="longitude"
+                class="dm-input"
+                placeholder="106.9896"
+              />
+            </div>
+          </div>
+          <div class="dm-footer">
+            <span></span>
+            <button
+              type="button"
+              class="dm-btn-next"
+              onclick="validateAndNext(this)"
+            >
+              Lanjut
+            </button>
+          </div>
+        </section>
+
+        <section class="dm-step">
+          <h2 class="dm-section-title">Fasilitas & Media</h2>
+
+          <div class="dm-field-group">
+            <label class="dm-label">Fasilitas Studio (Minimal 1) *</label>
+            <div id="facility-container">
+              <div class="dm-dynamic-row">
+                <input
+                  class="dm-input"
+                  name="facilities[]"
+                  placeholder="Contoh: Free WiFi"
+                  required
+                />
+                <button
+                  type="button"
+                  class="dm-action-btn"
+                  onclick="addFacility()"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="dm-field-group">
+            <label class="dm-label">Upload Foto Studio (Max 10 Foto) *</label>
+
+            <input
+              type="file"
+              id="image-input-trigger"
+              class="dm-input"
+              accept="image/*"
+              multiple
+              onchange="handleNewImages(this)"
+            />
+            <small
+              style="
+                color: #6b7280;
+                font-size: 12px;
+                margin-top: 4px;
+                display: block;
+              "
+              >Klik untuk memilih foto. Anda bisa memilih beberapa file
+              sekaligus.</small
+            >
+
+            <div id="image-counter" class="image-counter-text">
+              0 / 10 Foto Terpilih
+            </div>
+            <div id="image-error" class="image-error-msg"></div>
+
+            <div id="image-preview-container"></div>
+          </div>
+
+          <div class="dm-field-group">
+            <label class="dm-label">Range Harga (Display Only) *</label>
+            <input
+              class="dm-input"
+              name="price_range"
+              placeholder="Contoh: Rp 50.000 – Rp 250.000"
+              required
+            />
+          </div>
+
+          <div class="dm-footer">
+            <button type="button" class="dm-btn-back" onclick="prevStep()">
+              Kembali
+            </button>
+            <button
+              type="button"
+              class="dm-btn-next"
+              onclick="validateAndNext(this)"
+            >
+              Lanjut
+            </button>
+          </div>
+        </section>
+
+        <section class="dm-step">
+          <h2 class="dm-section-title">Jam Operasional</h2>
+          <p style="margin-bottom: 16px; font-size: 14px; color: #666">
+            Format 24 Jam (Contoh: 09:00 - 21:00)
+          </p>
+          <div class="dm-schedule-item">
+            <strong>Senin *</strong>
+            <div class="dm-schedule-inputs">
+              <input
+                type="time"
+                class="dm-input dm-time schedule-open"
+                name="schedule[senin][open]"
+                required
+              />
+              <span>s/d</span>
+              <input
+                type="time"
+                class="dm-input dm-time schedule-close"
+                name="schedule[senin][close]"
+                required
+              />
+            </div>
+          </div>
+          <div style="text-align: right; margin-bottom: 20px">
+            <button type="button" class="dm-btn-copy" onclick="copyMonday()">
+              ↓ Terapkan jam Senin ke semua hari
+            </button>
+          </div>
+          <div id="other-days">
+            <div class="dm-schedule-item">
+              <strong>Selasa</strong>
+              <div class="dm-schedule-inputs">
+                <input
+                  type="time"
+                  class="dm-input dm-time schedule-open"
+                  name="schedule[selasa][open]"
+                /><span>s/d</span
+                ><input
+                  type="time"
+                  class="dm-input dm-time schedule-close"
+                  name="schedule[selasa][close]"
+                />
+              </div>
+            </div>
+            <div class="dm-schedule-item">
+              <strong>Rabu</strong>
+              <div class="dm-schedule-inputs">
+                <input
+                  type="time"
+                  class="dm-input dm-time schedule-open"
+                  name="schedule[rabu][open]"
+                /><span>s/d</span
+                ><input
+                  type="time"
+                  class="dm-input dm-time schedule-close"
+                  name="schedule[rabu][close]"
+                />
+              </div>
+            </div>
+            <div class="dm-schedule-item">
+              <strong>Kamis</strong>
+              <div class="dm-schedule-inputs">
+                <input
+                  type="time"
+                  class="dm-input dm-time schedule-open"
+                  name="schedule[kamis][open]"
+                /><span>s/d</span
+                ><input
+                  type="time"
+                  class="dm-input dm-time schedule-close"
+                  name="schedule[kamis][close]"
+                />
+              </div>
+            </div>
+            <div class="dm-schedule-item">
+              <strong>Jumat</strong>
+              <div class="dm-schedule-inputs">
+                <input
+                  type="time"
+                  class="dm-input dm-time schedule-open"
+                  name="schedule[jumat][open]"
+                /><span>s/d</span
+                ><input
+                  type="time"
+                  class="dm-input dm-time schedule-close"
+                  name="schedule[jumat][close]"
+                />
+              </div>
+            </div>
+            <div class="dm-schedule-item">
+              <strong>Sabtu</strong>
+              <div class="dm-schedule-inputs">
+                <input
+                  type="time"
+                  class="dm-input dm-time schedule-open"
+                  name="schedule[sabtu][open]"
+                /><span>s/d</span
+                ><input
+                  type="time"
+                  class="dm-input dm-time schedule-close"
+                  name="schedule[sabtu][close]"
+                />
+              </div>
+            </div>
+            <div class="dm-schedule-item">
+              <strong>Minggu</strong>
+              <div class="dm-schedule-inputs">
+                <input
+                  type="time"
+                  class="dm-input dm-time schedule-open"
+                  name="schedule[minggu][open]"
+                /><span>s/d</span
+                ><input
+                  type="time"
+                  class="dm-input dm-time schedule-close"
+                  name="schedule[minggu][close]"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="dm-footer">
+            <button type="button" class="dm-btn-back" onclick="prevStep()">
+              Kembali
+            </button>
+            <button
+              type="button"
+              class="dm-btn-next"
+              onclick="validateAndNext(this)"
+            >
+              Lanjut
+            </button>
+          </div>
+        </section>
+
+        <section class="dm-step">
+          <h2 class="dm-section-title">Paket Layanan</h2>
+          <div id="packages-container">
+            <div class="dm-package-card">
+              <div class="dm-field-group">
+                <label class="dm-label">Nama Paket *</label>
+                <input
+                  class="dm-input"
+                  name="packages[0][name]"
+                  placeholder="Contoh: Paket Foto Keluarga"
+                  required
+                />
+              </div>
+              <div class="dm-field-group">
+                <label class="dm-label">Harga Paket (Rp) *</label>
+                <input
+                  type="number"
+                  class="dm-input"
+                  name="packages[0][price]"
+                  placeholder="150000"
+                  required
+                />
+              </div>
+              <div class="dm-field-group">
+                <label class="dm-label">Deskripsi Paket</label>
+                <textarea
+                  class="dm-textarea"
+                  name="packages[0][description]"
+                  style="min-height: 60px"
+                  placeholder="Durasi 15 menit, 2 orang, dst..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="dm-btn-dashed" onclick="addPackage()">
+            + Tambah Paket Lain
+          </button>
+          <div class="dm-footer">
+            <button type="button" class="dm-btn-back" onclick="prevStep()">
+              Kembali
+            </button>
+            <button type="submit" class="dm-btn-next">
+              Selesai & Daftarkan
+            </button>
+          </div>
+        </section>
+      </form>
+    </div>
+    <script>
+      let currentStep = 0;
+      const steps = document.querySelectorAll(".dm-step");
+      const circles = document.querySelectorAll(".dm-step-circle");
+      const lines = document.querySelectorAll(".dm-step-line");
+      function renderStep() {
+        steps.forEach((s, i) =>
+          s.classList.toggle("active", i === currentStep)
+        );
+        circles.forEach((c, i) => {
+          c.classList.toggle("active", i <= currentStep);
+        });
+        lines.forEach((l, i) => {
+          if (i < lines.length) {
+            l.classList.toggle("active", i < currentStep);
+          }
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function nextStep() {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          renderStep();
+        }
+      }
+      function prevStep() {
+        if (currentStep > 0) {
+          currentStep--;
+          renderStep();
+        }
+      }
+      document.addEventListener("DOMContentLoaded", renderStep);
+
+      let selectedStudioImages = [];
+      const MAX_IMAGES = 10;
+
+      function handleNewImages(input) {
+        const errorDiv = document.getElementById("image-error");
+        errorDiv.style.display = "none";
+        const newFiles = Array.from(input.files);
+
+        if (selectedStudioImages.length + newFiles.length > MAX_IMAGES) {
+          errorDiv.innerText = `Gagal menambahkan. Maksimal total ${MAX_IMAGES} foto.`;
+          errorDiv.style.display = "block";
+          input.value = "";
+          return;
+        }
+
+        newFiles.forEach((file) => {
+          selectedStudioImages.push(file);
+        });
+        input.value = "";
+        renderImagePreviews();
+      }
+
+      function renderImagePreviews() {
+        const container = document.getElementById("image-preview-container");
+        const counter = document.getElementById("image-counter");
+        container.innerHTML = "";
+        counter.innerText = `${selectedStudioImages.length} / ${MAX_IMAGES} Foto Terpilih`;
+
+        selectedStudioImages.forEach((file, index) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "img-preview-wrapper";
+            wrapper.innerHTML = `
+                <img src="${e.target.result}" alt="Preview ${index}">
+                <button type="button" class="img-remove-btn" onclick="removeImage(${index})">×</button>
+            `;
+            container.appendChild(wrapper);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function removeImage(index) {
+        selectedStudioImages.splice(index, 1);
+        renderImagePreviews();
+      }
+
+      function validateAndNext(btn) {
+        const stepEl = btn.closest(".dm-step");
+        const fields = stepEl.querySelectorAll(
+          "input:not([type=file]), textarea, select"
+        );
+        let isValid = true;
+
+        for (const f of fields) {
+          if (!f.checkValidity()) {
+            f.reportValidity();
+            isValid = false;
+            break;
+          }
+        }
+
+        if (currentStep === 1 && isValid) {
+          const errorDiv = document.getElementById("image-error");
+          if (selectedStudioImages.length === 0) {
+            errorDiv.innerText = "Wajib mengupload minimal 1 foto studio.";
+            errorDiv.style.display = "block";
+            document
+              .getElementById("image-input-trigger")
+              .scrollIntoView({ behavior: "smooth", block: "center" });
+            isValid = false;
+          } else {
+            errorDiv.style.display = "none";
+          }
+        }
+
+        if (isValid) nextStep();
+      }
+
+      const STORAGE_KEY = "mitra_form_final";
+      function saveForm() {
+        const data = {};
+        const form = document.getElementById("form-daftar-mitra");
+        const inputs = form.querySelectorAll(
+          'input:not([type="file"]), textarea, select'
+        );
+
+        inputs.forEach((input) => {
+          if (input.name) {
+            if (input.type === "radio") {
+              if (input.checked) data[input.name] = input.value;
+            } else {
+              if (input.name.includes("[]")) {
+                if (!data[input.name]) data[input.name] = [];
+                data[input.name].push(input.value);
+              } else {
+                data[input.name] = input.value;
+              }
+            }
+          }
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function restoreForm() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        try {
+          const data = JSON.parse(raw);
+          const form = document.getElementById("form-daftar-mitra");
+          Object.keys(data).forEach((k) => {
+            const el = form.querySelector(`[name="${k}"]`);
+            if (el && el.type !== "radio" && !k.includes("[]")) {
+              el.value = data[k];
+            }
+            if (el && el.type === "radio") {
+              const radio = form.querySelector(
+                `[name="${k}"][value="${data[k]}"]`
+              );
+              if (radio) radio.checked = true;
+            }
+          });
+        } catch (e) {
+          console.error("Error restoring form", e);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        restoreForm();
+        document
+          .getElementById("form-daftar-mitra")
+          .addEventListener("input", saveForm);
+        document
+          .getElementById("form-daftar-mitra")
+          .addEventListener("change", saveForm);
+      });
+
+      function addFacility() {
+        const container = document.getElementById("facility-container");
+        const div = document.createElement("div");
+        div.className = "dm-dynamic-row";
+        div.innerHTML =
+          '<input class="dm-input" name="facilities[]" placeholder="Fasilitas lainnya..." required><button type="button" class="dm-action-btn remove" onclick="this.parentElement.remove(); saveForm()">×</button>';
+        container.appendChild(div);
+      }
+
+      function copyMonday() {
+        const monOpen = document.querySelector(
+          'input[name="schedule[senin][open]"]'
+        ).value;
+        const monClose = document.querySelector(
+          'input[name="schedule[senin][close]"]'
+        ).value;
+        if (!monOpen || !monClose) {
+          alert("Harap isi jam buka dan tutup hari Senin terlebih dahulu.");
+          return;
+        }
+        const otherDays = document.querySelectorAll(
+          "#other-days .dm-schedule-item"
+        );
+        otherDays.forEach((dayRow) => {
+          dayRow.querySelector(".schedule-open").value = monOpen;
+          dayRow.querySelector(".schedule-close").value = monClose;
+        });
+        saveForm();
+      }
+
+      function addPackage() {
+        const container = document.getElementById("packages-container");
+        const index = container.children.length;
+        const div = document.createElement("div");
+        div.className = "dm-package-card";
+        div.innerHTML = `<div style="display:flex; justify-content:space-between; margin-bottom:10px"><strong>Paket #${
+          index + 1
+        }</strong><button type="button" style="color:red; background:none; border:none; cursor:pointer" onclick="this.closest('.dm-package-card').remove()">Hapus</button></div><div class="dm-field-group"><label class="dm-label">Nama Paket *</label><input class="dm-input" name="packages[${index}][name]" required></div><div class="dm-field-group"><label class="dm-label">Harga Paket (Rp) *</label><input type="number" class="dm-input" name="packages[${index}][price]" required></div><div class="dm-field-group"><label class="dm-label">Deskripsi Paket</label><textarea class="dm-textarea" style="min-height:60px" name="packages[${index}][description]"></textarea></div>`;
+        container.appendChild(div);
+      }
+
+      function handleFinalSubmit(e) {
+        e.preventDefault();
+
+        const stepEl = steps[steps.length - 1];
+        const fields = stepEl.querySelectorAll("input, textarea, select");
+        for (const f of fields) {
+          if (!f.checkValidity()) {
+            f.reportValidity();
+            return;
+          }
+        }
+
+        const form = document.getElementById("form-daftar-mitra");
+        const formData = new FormData(form);
+
+        formData.delete("studio_images");
+        selectedStudioImages.forEach((file) => {
+          formData.append("studio_images[]", file);
+        });
+
+        const btn = document.querySelector('.dm-btn-next[type="submit"]');
+        btn.innerText = "Mengirim...";
+        btn.disabled = true;
+
+        setTimeout(() => {
+          alert(
+            "Pendaftaran Berhasil! Data studio dan " +
+              selectedStudioImages.length +
+              " foto telah dikirim."
+          );
+          localStorage.removeItem(STORAGE_KEY);
+          window.location.reload();
+        }, 1500);
+      }
+    </script>
+  </body>
+</html>

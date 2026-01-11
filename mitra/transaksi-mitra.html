@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Riwayat Transaksi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="mitra-header">
+  <button class="mitra-back-btn" onclick="history.back()" aria-label="Kembali">
+    <svg class="mitra-back-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12H5M12 19l-7-7 7-7"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <h1 class="mitra-header-title">Riwayat Transaksi</h1>
+</div>
+
+<div class="mitra-transaction-page">
+
+  <div class="mitra-table-card">
+    <table class="mitra-table">
+      <thead>
+        <tr>
+          <th>ID Transaksi</th>
+          <th>Studio</th>
+          <th>Tanggal</th>
+          <th>Nominal</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>res_002</td>
+          <td>Selfie Time, Mal Lippo Cikarang</td>
+          <td>18/12/2025</td>
+          <td>Rp 25.000</td>
+          <td><span class="status success">Selesai</span></td>
+          <td><button class="icon-btn">👁</button></td>
+        </tr>
+
+        <tr>
+          <td>res_004</td>
+          <td>Selfie Time, Mal Lippo Cikarang</td>
+          <td>21/12/2025</td>
+          <td>Rp 45.000</td>
+          <td><span class="status success">Selesai</span></td>
+          <td><button class="icon-btn">👁</button></td>
+        </tr>
+
+        <tr>
+          <td>res_007</td>
+          <td>Selfie Time, Mal Lippo Cikarang</td>
+          <td>23/12/2025</td>
+          <td>Rp 45.000</td>
+          <td><span class="status refund">Dikembalikan</span></td>
+          <td><button class="icon-btn">👁</button></td>
+        </tr>
+
+        <tr>
+          <td>res_010</td>
+          <td>Selfie Time, Mal Lippo Cikarang</td>
+          <td>15/12/2025</td>
+          <td>Rp 75.000</td>
+          <td><span class="status refund">Dikembalikan</span></td>
+          <td><button class="icon-btn">👁</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
