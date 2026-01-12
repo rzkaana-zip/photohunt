@@ -1,12 +1,10 @@
 console.log("JS jalan");
 
-// DATA
 let paket = null;
 let orang = null;
 let harga = null;
 let jam = null;
 
-// PILIH PAKET
 document.querySelectorAll(".paket-item").forEach(item => {
   item.addEventListener("click", () => {
     document.querySelectorAll(".paket-item")
@@ -24,7 +22,6 @@ document.querySelectorAll(".paket-item").forEach(item => {
   });
 });
 
-// PILIH JAM
 document.querySelectorAll(".jadwal").forEach(j => {
   j.addEventListener("click", () => {
     document.querySelectorAll(".jadwal")
@@ -35,7 +32,6 @@ document.querySelectorAll(".jadwal").forEach(j => {
   });
 });
 
-// TOMBOL BAYAR
 document.getElementById("btnBayar").addEventListener("click", () => {
   const tanggal = document.getElementById("tanggal").value;
 

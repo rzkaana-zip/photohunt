@@ -9,13 +9,12 @@
 <body>
 
 <div class="mitra-edit-page">
-
   <div class="mitra-edit-backdrop" id="editStudioModal">
-
     <div class="mitra-edit-modal">
+
       <div class="mitra-edit-header">
-        <div class="mitra-edit-title">
-          Edit Studio: Selfie Time, Mal Lippo Cikarang
+        <div class="mitra-edit-title" id="studioTitle">
+          Edit Studio
         </div>
         <button class="mitra-edit-close" id="closeEditModal">✕</button>
       </div>
@@ -24,66 +23,133 @@
 
         <div class="mitra-form-group">
           <label>Nama Studio</label>
-          <input type="text" value="Selfie Time, Mal Lippo Cikarang">
+          <input type="text" id="studioName">
         </div>
 
         <div class="mitra-form-group">
           <label>Deskripsi</label>
-          <textarea rows="3"></textarea>
+          <textarea rows="3" id="studioDescription"></textarea>
         </div>
 
         <div class="mitra-form-group">
           <label>Range Harga</label>
-          <input type="text" value="Rp 20.000 - Rp 80.000">
+          <input type="text" id="studioPrice">
         </div>
 
         <div class="mitra-form-group">
-            <label>Fasilitas</label>
-
-            <div class="mitra-facility-item">
-              <input type="text" value="AC">
-              <button type="button" class="mitra-remove">🗑</button>
-            </div>
-
-            <div class="mitra-facility-item">
-              <input type="text" value="WiFi">
-              <button type="button" class="mitra-remove">🗑</button>
-              </div>
-
-            <div class="mitra-facility-item">
-              <input type="text" value="Backdrop Beragam">
-              <button type="button" class="mitra-remove">🗑</button>
-            </div>
-
-            <div class="mitra-facility-item">
-              <input type="text" value="Lighting Professional">
-              <button type="button" class="mitra-remove">🗑</button>
-            </div>
-
+          <label>Fasilitas</label>
+          <div id="facilityList"></div>
         </div>
 
-          <div class="mitra-add-facility">
-            <input type="text" id="newFacilityInput" placeholder="Tambah fasilitas">
-            <button id="addFacilityBtn">＋</button>
-          </div>
+        <div class="mitra-add-facility">
+          <input type="text" id="newFacilityInput" placeholder="Tambah fasilitas">
+          <button type="button" id="addFacilityBtn">＋</button>
+        </div>
 
         <div class="mitra-edit-footer">
-            <button type="button" class="mitra-btn-cancel" id="cancelEdit">
-                Batal
-            </button>
-            <button type="button" class="mitra-btn-save" id="saveEdit">
-                Simpan Perubahan
-            </button>
-        </div>
-
+          <button type="button" class="mitra-btn-cancel" id="cancelEdit">
+            Batal
+          </button>
+          <button type="button" class="mitra-btn-save" id="saveEdit">
+            Simpan Perubahan
+          </button>
         </div>
 
       </div>
     </div>
   </div>
-
 </div>
 
-<script src="script.js"></script>
+<script>
+const mitraId = localStorage.getItem("activeMitraId") || "mitra_001";
+
+const studioTitle = document.getElementById("studioTitle");
+const studioName = document.getElementById("studioName");
+const studioDescription = document.getElementById("studioDescription");
+const studioPrice = document.getElementById("studioPrice");
+const facilityList = document.getElementById("facilityList");
+const newFacilityInput = document.getElementById("newFacilityInput");
+const addFacilityBtn = document.getElementById("addFacilityBtn");
+const saveEditBtn = document.getElementById("saveEdit");
+const cancelEditBtn = document.getElementById("cancelEdit");
+const closeEditModal = document.getElementById("closeEditModal");
+
+function loadStudioData() {
+  const allData = JSON.parse(localStorage.getItem("photohuntStudios")) || {};
+  const studio = allData[mitraId];
+
+  if (!studio) {
+    studioTitle.textContent = "Edit Studio";
+    return;
+  }
+
+  studioTitle.textContent = `Edit Studio: ${studio.name}`;
+  studioName.value = studio.name || "";
+  studioDescription.value = studio.description || "";
+  studioPrice.value = studio.price || "";
+
+  facilityList.innerHTML = "";
+  (studio.facilities || []).forEach(f => addFacilityField(f));
+}
+
+function addFacilityField(value = "") {
+  const wrapper = document.createElement("div");
+  wrapper.className = "mitra-facility-item";
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = value;
+
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "mitra-remove";
+  removeBtn.textContent = "🗑";
+  removeBtn.onclick = () => wrapper.remove();
+
+  wrapper.appendChild(input);
+  wrapper.appendChild(removeBtn);
+  facilityList.appendChild(wrapper);
+}
+
+addFacilityBtn.addEventListener("click", () => {
+  const value = newFacilityInput.value.trim();
+  if (!value) return;
+
+  addFacilityField(value);
+  newFacilityInput.value = "";
+});
+
+saveEditBtn.addEventListener("click", () => {
+  if (!confirm("Simpan perubahan studio?")) return;
+
+  const facilities = [];
+  facilityList.querySelectorAll("input").forEach(input => {
+    if (input.value.trim()) facilities.push(input.value.trim());
+  });
+
+  const allData = JSON.parse(localStorage.getItem("photohuntStudios")) || {};
+
+  allData[mitraId] = {
+    name: studioName.value.trim(),
+    description: studioDescription.value.trim(),
+    price: studioPrice.value.trim(),
+    facilities
+  };
+
+  localStorage.setItem("photohuntStudios", JSON.stringify(allData));
+  window.location.href = "kelola-studio.html";
+});
+
+cancelEditBtn.addEventListener("click", () => {
+  window.location.href = "kelola-studio.html";
+});
+
+closeEditModal.addEventListener("click", () => {
+  window.location.href = "kelola-studio.html";
+});
+
+loadStudioData();
+</script>
+
 </body>
 </html>

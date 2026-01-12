@@ -1,66 +1,536 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengaturan - PhotoHunt</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informasi Pemesanan - PhotoHunt</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    .ph-customer-order {
+      font-family: "Arimo", sans-serif;
+      background: #ffffff;
+      min-height: 100vh;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+    }
+
+    .ph-customer-order div, 
+    .ph-customer-order section, 
+    .ph-customer-order header, 
+    .ph-customer-order main, 
+    .ph-customer-order button, 
+    .ph-customer-order img, 
+    .ph-customer-order span {
+      box-sizing: border-box;
+    }
+
+    .ph-order-header {
+      background: linear-gradient(180deg, #222222 0%, #FFFFFF 100%);
+      padding: 16px 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .ph-header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+      height: 48px;
+    }
+
+    .ph-back-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .ph-back-btn svg path {
+      stroke: #ffffff;
+    }
+
+    .ph-logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ph-logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff; 
+    }
+
+    .ph-camera-icon {
+      font-size: 20px;
+    }
+
+    .ph-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 8px;
+      color: #000; 
+    }
+
+    .ph-order-wrapper {
+      width: 1400px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .ph-order-status {
+      background: #000000;
+      border-radius: 12px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      width: 100%;
+    }
+
+    .ph-order-id-label {
+      font-size: 12px;
+      color: #9CA3AF;
+      margin-bottom: 4px;
+    }
+
+    .ph-order-id-value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .ph-status-badge {
+      background: #1F2937;
+      border: 1px solid #374151;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .ph-studio-card {
+      border: 1px solid #000000;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      gap: 20px;
+      background: #fff;
+    }
+
+    .ph-studio-image {
+      width: 120px;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      background-color: #eee;
+    }
+
+    .ph-studio-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .ph-studio-name {
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .ph-studio-address {
+      font-size: 14px;
+      color: #4B5563;
+    }
+
+    .ph-studio-rating {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .ph-order-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .ph-order-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+   .ph-section-header {
+      font-size: 18px;
+      font-weight: 700;
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .ph-detail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ph-detail-item {
+      display: flex;
+      gap: 12px;
+    }
+
+    .ph-icon-col {
+      width: 24px;
+      display: flex;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .ph-text-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ph-label {
+      font-size: 12px;
+      color: #6B7280;
+    }
+
+    .ph-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+    }
+
+   .ph-payment-box {
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .ph-pay-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid #E5E7EB;
+      font-size: 14px;
+      align-items: center;
+    }
+
+    .ph-pay-row:last-child {
+      border-bottom: none;
+    }
+
+    .ph-pay-row.total {
+      background: #F3F4F6;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .ph-icon-box {
+      background: #000;
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+      font-size: 12px;
+    }
+
+   .ph-qr-container {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .ph-qr-title {
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .ph-qr-img {
+      width: 150px;
+      height: 150px;
+      background: #fff;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #E5E7EB;
+    }
+
+    .ph-qr-helper {
+      font-size: 12px;
+      color: #6B7280;
+      margin-top: 12px;
+    }
+
+    .ph-footer-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+      padding-bottom: 40px;
+    }
+
+    .ph-btn {
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #D1D5DC;
+      background: #E5E7EB;
+      min-width: 180px;
+    }
+
+  </style>
 </head>
 
-<body class="page-profile">
+<body>
+  <div class="ph-customer-order">
 
-<header>
-    <button class="back-btn" onclick="history.back()">←</button>
-    <div class="logo" style="display:inline;">PhotoHunt (camera)</div>
-</header>
+    <header class="ph-order-header">
+      <div class="ph-header-top-row">
+        <button class="ph-back-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 12H5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 19L5 12L12 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        
+        <div class="ph-logo-container">
+          <span class="ph-logo-text">PhotoHunt</span>
+          <span class="ph-camera-icon">📷</span>
+        </div>
 
-<main>
-    <section class="profile-card">
-        <div class="header-kelolaprofile">
-          <div>
-            <h2>Informasi Pemesanan</h2>
+        <div style="width: 24px;"></div> 
+      </div>
+      
+      <div class="ph-header-title">Informasi Pemesanan</div>
+    </header>
+
+    <main class="ph-order-wrapper">
+
+      <div class="ph-order-status">
+        <div>
+          <div class="ph-order-id-label">Nomor Pemesanan</div>
+          <div id="orderId" class="ph-order-id-value"></div>
+        </div>
+        <div id="orderStatus" class="ph-status-badge"></div>
+      </div>
+
+      <div class="ph-studio-card">
+        <img id="studioImage" class="ph-studio-image" alt="Studio" />
+        <div class="ph-studio-info">
+          <div id="studioName" class="ph-studio-name"></div>
+          <div id="studioAddress" class="ph-studio-address"></div>
+          <div id="studioRating" class="ph-studio-rating"></div>
+        </div>
+      </div>
+
+      <div class="ph-order-grid">
+        
+        <section>
+          <div class="ph-section-header">Detail Pesanan</div>
+          <div class="ph-detail-list">
+            
+            <div class="ph-detail-item">
+              <div class="ph-icon-col">👤</div>
+              <div class="ph-text-col">
+                <span class="ph-label">Nama</span>
+                <span id="customerName" class="ph-value"></span>
+              </div>
+            </div>
+
+            <div class="ph-detail-item">
+              <div class="ph-icon-col">🏷️</div>
+              <div class="ph-text-col">
+                <span class="ph-label">Paket</span>
+                <span id="packageName" class="ph-value"></span>
+              </div>
+            </div>
+
+            <div class="ph-detail-item">
+              <div class="ph-icon-col">📅</div>
+              <div class="ph-text-col">
+                <span class="ph-label">Tanggal</span>
+                <span id="bookingDate" class="ph-value"></span>
+              </div>
+            </div>
+
+            <div class="ph-detail-item">
+              <div class="ph-icon-col">🕒</div>
+              <div class="ph-text-col">
+                <span class="ph-label">Waktu</span>
+                <span id="bookingTime" class="ph-value"></span>
+              </div>
+            </div>
+
+            <div class="ph-detail-item">
+              <div class="ph-icon-col">👥</div>
+              <div class="ph-text-col">
+                <span class="ph-label">Jumlah Orang</span>
+                <span id="peopleCount" class="ph-value"></span>
+              </div>
+            </div>
+
+            <div class="ph-detail-item">
+              <div class="ph-icon-col">⏱️</div>
+              <div class="ph-text-col">
+                <span class="ph-label">Durasi</span>
+                <span class="ph-value">60 menit</span>
+              </div>
+            </div>
+
           </div>
-        </div>
+        </section>
 
-       <hr>
-    <h1>Selfie Time, Mal Lippo Cikarang</h1>
-    <p>📍 Jl. MH. Thamrin Lantai 1, Cibatu, Cikarang Sel.,Kabupaten Bekasi, Jawa Barat 17550</p>
-    <p>⭐ 4.8 (124 reviews)</p>
-    <div class="contents">
-        <div class="photos">
-            <img src="" alt="Studio Place">
-            <div class="maps">
-
+        <section>
+          <div class="ph-section-header">Rincian Biaya</div>
+          
+          <div class="ph-payment-box">
+            <div class="ph-pay-row">
+              <div style="display:flex; align-items:center">
+                <span class="ph-icon-box">📦</span>
+                <div>
+                    <div>Harga Paket</div>
+                    <div style="font-size:12px; color:#666">Self Photo Basic</div>
+                </div>
+              </div>
+              <span id="packagePrice"></span>
             </div>
-        </div>
-        <div class="details">
-            <h2>Detail Pesanan</h2>
-            <p>Nama : Jennifer</p>
-            <p>Paket: Self Photo Basic</p>
-            <p>Tanggal: Rabu, 10 Desember 2025</p>
-            <p>Waktu: 13:00 - 14:00</p>
-            <p>Jumlah Orang: 4 orang</p>
-            <p>Durasi: 60 menit</p>
-        </div>
-        <div class="rincian">
-            <h2>Rincian Biaya</h2>
-            <p>Harga Paket: Rp. 75.000</p>
-            <p>Tambahan Orang: </p>
-            <p>DP: </p>
-            <p>Total: </p>
-            <div class="qr">
-                <h4>Cetak QR</h4>
-                <img src="" alt="">
-                <p>Tunjukkan QR ini pada Pihak Studio saat anda datang</p>
-            </div>
-        </div>
-    </div>
-    <div class="buttonss">
-        <button class="pemesanan-batal-btn">Batalkan Pesanan</button>
-        <button class="pemesanan-review-btn">Berikan Review</button>
-    </div>        
-    </section>
-</main>
 
+            <div class="ph-pay-row">
+              <div style="display:flex; align-items:center">
+                <span class="ph-icon-box">👤</span>
+                <div>
+                    <div>Tambahan Orang</div>
+                    <div style="font-size:12px; color:#666">1 orang tambahan</div>
+                </div>
+              </div>
+              <span id="extraPrice"></span>
+            </div>
+            
+            <div class="ph-pay-row">
+                <div style="display:flex; align-items:center">
+                  <span class="ph-icon-box">💳</span>
+                  <div>
+                      <div>DP (Down Payment)</div>
+                      <div style="font-size:12px; color:#666">Sudah dibayar</div>
+                  </div>
+                </div>
+                <span>Rp 50.000</span>
+              </div>
+
+            <div class="ph-pay-row total">
+              <div style="display:flex; align-items:center">
+                <span class="ph-icon-box">💵</span>
+                <span>Total Pembayaran</span>
+              </div>
+              <span id="totalPrice"></span>
+            </div>
+          </div>
+
+          <div class="ph-qr-container">
+            <div class="ph-qr-title">Cetak QR</div>
+            <img id="qrImage" class="ph-qr-img" alt="QR Code" />
+            <div class="ph-qr-helper">Tunjukkan QR ini pada Pihak Studio saat anda datang</div>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="ph-footer-actions">
+        <button id="cancelOrderBtn" class="ph-btn">Batalkan Pesanan</button>
+        <button id="reviewOrderBtn" class="ph-btn">Berikan Review</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const orderData = {
+      orderId: "PHB-2025-001247",
+      status: "CONFIRMED",
+      studio: {
+        name: "PINARAC STUDIO, BEKASI",
+        address: "Jl. MH. Thamrin Lantai 1, Cibatu, Cikarang Sel., Kabupaten Bekasi, Jawa Barat 17550",
+        rating: "⭐ 4.8 (124 reviews)",
+        image: "https://via.placeholder.com/140x120"
+      },
+      customer: { name: "Jennifer" },
+      booking: {
+        package: "Self Photo Basic",
+        date: "Rabu, 10 Desember 2025",
+        time: "13:00 - 14:00",
+        people: "4 orang"
+      },
+      payment: {
+        packagePrice: "Rp 300.000",
+        extraPrice: "Rp 50.000",
+        total: "Rp 350.000"
+      },
+      qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PHB-2025-001247"
+    };
+
+    function renderOrder(data) {
+      document.getElementById("orderId").textContent = data.orderId;
+      document.getElementById("orderStatus").textContent = data.status;
+
+      document.getElementById("studioName").textContent = data.studio.name;
+      document.getElementById("studioAddress").textContent = data.studio.address;
+      document.getElementById("studioRating").textContent = data.studio.rating;
+      document.getElementById("studioImage").src = data.studio.image;
+
+      document.getElementById("customerName").textContent = data.customer.name;
+      document.getElementById("packageName").textContent = data.booking.package;
+      document.getElementById("bookingDate").textContent = data.booking.date;
+      document.getElementById("bookingTime").textContent = data.booking.time;
+      document.getElementById("peopleCount").textContent = data.booking.people;
+
+      document.getElementById("packagePrice").textContent = data.payment.packagePrice;
+      document.getElementById("extraPrice").textContent = data.payment.extraPrice;
+      document.getElementById("totalPrice").textContent = data.payment.total;
+
+      document.getElementById("qrImage").src = data.qr;
+    }
+
+    renderOrder(orderData);
+
+    document.getElementById("cancelOrderBtn").onclick = () => console.log("Cancel Clicked");
+    document.getElementById("reviewOrderBtn").onclick = () => console.log("Review Clicked");
+  </script>
 </body>
 </html>

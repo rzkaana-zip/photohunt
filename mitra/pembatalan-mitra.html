@@ -244,6 +244,7 @@
                 });
             });
 
+            
             document.querySelectorAll('.js-approve-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     const card = this.closest('.cr-card');
@@ -265,7 +266,7 @@
                     if(confirm(`Apakah Anda yakin ingin menolak refund untuk ID: ${id}?`)) {
                         console.log(`Sending API request: REJECT ${id}`);
                         alert(`Refund ${id} ditolak!`);
-                        card.remove(); 
+                        card.remove();
                     }
                 });
             });

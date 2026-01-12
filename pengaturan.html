@@ -1,77 +1,398 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengaturan - PhotoHunt</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengaturan</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body.settings-pref-page {
+      background: #f3f4f6;
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      color: #111827;
+    }
+
+    .settings-pref-page * {
+      box-sizing: border-box;
+    }
+
+    .settings-pref-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, #9ca3af 0%, #f3f4f6 100%);
+      padding: 30px 20px 80px; 
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: #000000;
+      transition: all 0.3s ease;
+    }
+
+    .settings-pref-header.scrolled {
+      padding: 15px 20px;
+      background: #d1d5db; 
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      color: #000;
+      line-height: 1.2;
+    }
+
+    .header-content p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: #374151; 
+      font-weight: 500;
+    }
+
+    .settings-pref-back {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      border-radius: 50%;
+      border: 2.5px solid #1f2937;
+      background: transparent;
+      color: #1f2937;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: transform 0.2s;
+    }
+
+    .settings-pref-back:hover {
+      transform: scale(1.05);
+      background: rgba(0,0,0,0.05);
+    }
+
+    .settings-pref-main {
+      padding: 0 20px 60px;
+    }
+
+    .settings-pref-card {
+      max-width: 850px;
+      margin: -40px auto 0; 
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 10;
+    }
+
+    .settings-pref-section {
+      margin-top: 30px;
+    }
+    .settings-pref-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #4b5563;
+    }
+
+    .settings-pref-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .settings-pref-item:hover {
+      background: #f9fafb;
+    }
+
+    .settings-pref-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .settings-pref-icon {
+      width: 34px;
+      height: 34px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .sp-theme-row {
+      display: flex;
+      gap: 15px;
+    }
+    .sp-theme-box {
+      flex: 1;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .sp-theme-box.active {
+      border-color: #111827;
+      background: #f9fafb;
+      font-weight: 700;
+    }
+
+    .settings-pref-dropdown {
+      position: relative;
+    }
+    .sp-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      margin-top: 5px;
+      z-index: 100;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .settings-pref-dropdown.open .sp-menu {
+      display: block;
+    }
+    .sp-option {
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+    .sp-option:hover {
+      background: #f3f4f6;
+    }
+    .sp-option.active {
+      color: #2563eb;
+      font-weight: 700;
+    }
+
+    .sp-list-wrapper {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .sp-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #f3f4f6;
+      cursor: pointer;
+    }
+    .sp-list-item:last-child {
+      border-bottom: none;
+    }
+    .sp-list-text h4 {
+      margin: 0;
+      font-size: 14px;
+      color: #111827;
+    }
+    .sp-list-text p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .settings-pref-footer {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .sp-logout {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 12px 35px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .sp-logout:hover {
+      opacity: 0.9;
+    }
+  </style>
 </head>
+<body class="settings-pref-page">
 
-<body class="page-profile">
+  <header class="settings-pref-header" id="mainHeader">
+    <button class="settings-pref-back" id="spBack">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="header-content">
+      <h1>Pengaturan</h1>
+      <p>Anda dapat mengubah preferensi sesuai dengan keinginan</p>
+    </div>
+  </header>
 
-<header>
-    <button class="back-btn" onclick="history.back()">←</button>
-    <div class="logo" style="display:inline;">PhotoHunt (camera)</div>
-</header>
+  <main class="settings-pref-main">
+    <div class="settings-pref-card">
 
-<main>
-    <section class="profile-card">
-        <div class="header-kelolaprofile">
-          <div>
-            <h2>Pengaturan</h2>
-            <p>Anda dapat mengubah preferensi sesuai dengan keinginan</p>
+      <section class="settings-pref-section">
+        <div class="settings-pref-item" data-link="profile.html">
+          <div class="settings-pref-left">
+            <div class="settings-pref-icon">👤</div>
+            <span>Kelola Akun</span>
+          </div>
+          <span class="settings-pref-arrow">→</span>
+        </div>
+      </section>
+
+      <section class="settings-pref-section">
+        <h2 class="settings-pref-title">Bahasa</h2>
+        <div class="settings-pref-dropdown" id="spLang">
+          <div class="settings-pref-item sp-trigger">
+            <div class="settings-pref-left">
+              <div class="settings-pref-icon">🌐</div>
+              <span id="spLangLabel">Bahasa Indonesia</span>
+            </div>
+            <span class="settings-pref-arrow">▼</span>
+          </div>
+          <div class="sp-menu">
+            <div class="sp-option active" data-lang="id">Bahasa Indonesia</div>
+            <div class="sp-option" data-lang="en">English (US)</div>
+            <div class="sp-option" data-lang="jp">日本語</div>
           </div>
         </div>
-       
-        <div class="profile-form">
-            <button class="profile-settings-btn">
-                <div class="button">
-                    <img src="profile.jpg" alt="Profile Picture">
-                    <p>Kelola Account</p>
-                </div>
-            </button>
-            <div>
-              <label>Bahasa</label>
-              <select>
-                <option value="">Pilih Bahasa</option>
-                <option>Bahasa Indonesia</option>
-                <option>Bahasa Inggris</option>
-              </select>
-            </div>
-            <div class="profile-settings-tampilan">
-                <label>Tampilan</label>
-                   <button class="night">
-                       <div class="button">
-                           <img src="profile.jpg" alt="Profile Picture">
-                           <p>Night</p>
-                       </div>
-                    </button>
-                    <button class="day">
-                        <div class="button">
-                            <img src="profile.jpg" alt="Profile Picture">
-                            <p>Day</p>
-                        </div>
-                    </button>
-                </div>
-            <h3>Aktivitas</h3>
-                <div class="History" href="">
-                    <h4>History Pemesanan</h4>
-                    <p>Ketahui histori reservasi photobooth anda</p>
-                </div>
-                <div class="Informasi" href="">
-                    <h4>Informasi Pemesanan</h4>
-                    <p>Ketahui informasi detail mengenai reservasi photobooth anda</p>
-                </div>
-            <h3 href="notifikasi.html">Notifikasi</h3>
+      </section>
+
+      <section class="settings-pref-section">
+        <h2 class="settings-pref-title">Tampilan</h2>
+        <div class="sp-theme-row">
+          <div class="sp-theme-box active" data-theme="light">☀️<br>Siang</div>
+          <div class="sp-theme-box" data-theme="dark">🌙<br>Malam</div>
         </div>
+      </section>
 
-        <hr>
+      <section class="settings-pref-section">
+        <h2 class="settings-pref-title">Aktivitas</h2>
+        <div class="sp-list-wrapper">
+          <div class="sp-list-item" data-link="histori-pemesanan.html">
+            <div class="sp-list-text">
+              <h4>Histori Pemesanan</h4>
+              <p>Ketahui histori reservasi photobooth anda</p>
+            </div>
+            <span class="settings-pref-arrow">→</span>
+          </div>
+          <div class="sp-list-item" data-link="info-pemesanan.html">
+            <div class="sp-list-text">
+              <h4>Informasi Pemesanan</h4>
+              <p>Ketahui informasi detail mengenai reservasi photobooth anda</p>
+            </div>
+            <span class="settings-pref-arrow">→</span>
+          </div>
+        </div>
+      </section>
 
-        <button class="profile-btn">KELUAR AKUN</button>
-        
-    </section>
+      <section class="settings-pref-section">
+        <h2 class="settings-pref-title">Notifikasi</h2>
+        <div class="settings-pref-item" data-link="notifikasi.html">
+          <div class="settings-pref-left">
+            <div class="settings-pref-icon">🔔</div>
+            <span>Pengaturan Notifikasi</span>
+          </div>
+          <span class="settings-pref-arrow">→</span>
+        </div>
+      </section>
 
-</main>
+      <footer class="settings-pref-footer">
+        <button class="sp-logout" id="spLogout">Keluar Akun</button>
+      </footer>
+    </div>
+  </main>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      const backBtn = document.getElementById('spBack');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          if (document.referrer) {
+            window.history.back();
+          } else {
+            console.log("Kembali ke Home"); }
+        });
+      }
+
+      const header = document.getElementById('mainHeader');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      const langDropdown = document.getElementById('spLang');
+      const langTrigger = langDropdown.querySelector('.sp-trigger');
+      const langLabel = document.getElementById('spLangLabel');
+      const langOptions = langDropdown.querySelectorAll('.sp-option');
+
+      langTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle('open');
+      });
+
+      langOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          langOptions.forEach(opt => opt.classList.remove('active'));
+          option.classList.add('active');
+          langLabel.textContent = option.textContent;
+          langDropdown.classList.remove('open');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!langDropdown.contains(e.target)) {
+          langDropdown.classList.remove('open');
+        }
+      });
+
+      const themeBoxes = document.querySelectorAll('.sp-theme-box');
+      themeBoxes.forEach(box => {
+        box.addEventListener('click', () => {
+          themeBoxes.forEach(b => b.classList.remove('active'));
+          box.classList.add('active');
+          console.log('Tema:', box.dataset.theme);
+        });
+      });
+
+      const linkItems = document.querySelectorAll('[data-link]');
+      linkItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const target = item.dataset.link;
+          if(target) window.location.href = target;
+        });
+      });
+
+      const logoutBtn = document.getElementById('spLogout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          if(confirm("Apakah anda yakin ingin keluar?")) {
+            alert("Logout berhasil!");
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

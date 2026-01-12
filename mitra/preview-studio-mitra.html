@@ -14,46 +14,37 @@
     <div class="mitra-preview-modal">
 
       <div class="mitra-preview-header">
-        <div class="mitra-preview-title">
-          Preview: Selfie Time, Mal Lippo Cikarang
+        <div class="mitra-preview-title" id="previewTitle">
+          Preview Studio
         </div>
-        <button class="mitra-preview-close" onclick="closeModal()">✕</button>
+        <button class="mitra-preview-close" id="closePreview">✕</button>
       </div>
 
       <div class="mitra-preview-body">
 
-        <div class="mitra-preview-desc">
-          <strong>Selfie Time, Mal Lippo Cikarang</strong><br>
-          Studio foto selfie modern dengan berbagai pilihan backdrop menarik
-          dan peralatan foto profesional.
+        <div class="mitra-preview-desc" id="previewDesc">
+          -
         </div>
 
         <div class="mitra-preview-info">
           <div>
             <div class="mitra-info-label">Lokasi</div>
-            <div class="mitra-info-text">
-              Lantai 1 Unit No.39 (Dekat 3second) | Jl. MH. Thamrin
-              Lantai 1, Cibatu, Cikarang Selatan, Kabupaten Bekasi,
-              Jawa Barat 17550
+            <div class="mitra-info-text" id="previewLocation">
+              -
             </div>
           </div>
 
           <div>
             <div class="mitra-info-label">Rating</div>
             <div class="mitra-info-text">
-              ⭐ <strong>5.0</strong> (2916 ulasan)
+              ⭐ <strong>5.0</strong> (0 ulasan)
             </div>
           </div>
         </div>
 
         <div class="mitra-section">
           <div class="mitra-section-title">Fasilitas</div>
-          <div class="mitra-chips">
-            <span class="mitra-chip">AC</span>
-            <span class="mitra-chip">WiFi</span>
-            <span class="mitra-chip">Backdrop Beragam</span>
-            <span class="mitra-chip">Lighting Professional</span>
-            <span class="mitra-chip">Cetak Foto Langsung</span>
+          <div class="mitra-chips" id="previewFacilities">
           </div>
         </div>
 
@@ -99,11 +90,49 @@
     </div>
   </div>
 
-  <script>
-    function closeModal() {
-      document.querySelector('.mitra-preview-backdrop').style.display = 'none';
-    }
-  </script>
+<script>
+const mitraId = localStorage.getItem("activeMitraId") || "mitra_001";
+
+const previewTitle = document.getElementById("previewTitle");
+const previewDesc = document.getElementById("previewDesc");
+const previewLocation = document.getElementById("previewLocation");
+const previewFacilities = document.getElementById("previewFacilities");
+const closePreview = document.getElementById("closePreview");
+
+function loadPreviewStudio() {
+  const allData = JSON.parse(localStorage.getItem("photohuntStudios")) || {};
+  const studio = allData[mitraId];
+
+  if (!studio) {
+    previewTitle.textContent = "Preview Studio";
+    previewDesc.textContent = "Studio belum tersedia.";
+    previewLocation.textContent = "-";
+    return;
+  }
+
+  previewTitle.textContent = `Preview: ${studio.name}`;
+  previewDesc.innerHTML = `
+    <strong>${studio.name}</strong><br>
+    ${studio.description || ""}
+  `;
+
+  previewLocation.textContent = studio.location || "Lokasi belum diisi";
+
+  previewFacilities.innerHTML = "";
+  (studio.facilities || []).forEach(f => {
+    const chip = document.createElement("span");
+    chip.className = "mitra-chip";
+    chip.textContent = f;
+    previewFacilities.appendChild(chip);
+  });
+}
+
+closePreview.addEventListener("click", () => {
+  window.location.href = "kelola-studio.html";
+});
+
+loadPreviewStudio();
+</script>
 
 </body>
 </html>

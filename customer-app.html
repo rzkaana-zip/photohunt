@@ -1,102 +1,666 @@
-
 <!DOCTYPE html>
-<html lang="id"> 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoHunt - Cari & Booking Photobox/Studio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <div class="logo">PhotoHunt (camera)</div>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhotoHunt – Beranda Customer</title>
 
-        <div class="header-icons">
-            <button id="profileBtn">Profile</button>
-            <button id="cart">Cart</button>
-            <button id="logoutBtn">Logout</button>
+    <style>
+      .ph-body-root {
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        width: 100%;
+        min-height: 100vh;
+      }
+
+      .beranda {
+        width: 100%;
+        min-height: 100vh;
+        background-color: #ffffff;
+        color: #000;
+        font-family: "Inter", "Segoe UI", sans-serif;
+        position: relative;
+      }
+
+      .beranda div,
+      .beranda header,
+      .beranda section,
+      .beranda main,
+      .beranda input,
+      .beranda button,
+      .beranda svg,
+      .beranda span {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* HEADER */
+      .beranda .header-full-width {
+        width: 100%;
+        background: linear-gradient(180deg, #d9d9d9 0%, #ffffff 90%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .beranda .header-top {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .beranda .photo-hunt {
+        color: #000000;
+        font-family: "Inter", sans-serif;
+        font-size: 32px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .beranda .nav-icons {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .beranda .icon-btn {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        stroke-width: 2;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+
+      .beranda .icon-btn:hover {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
+
+      /* HERO SECTION */
+      .beranda .hero-section {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        padding-bottom: 60px;
+      }
+
+      .beranda .search-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+        margin-bottom: -1px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .beranda .tab-item {
+        font-size: 18px;
+        font-weight: 700;
+        padding-bottom: 10px;
+        cursor: pointer;
+        color: #888;
+        position: relative;
+        transition: color 0.2s;
+      }
+
+      .beranda .tab-item.active {
+        color: #000;
+      }
+
+      .beranda .tab-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #000;
+        border-radius: 2px;
+      }
+
+      .beranda .search-box-container {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        width: 90%;
+        max-width: 1000px;
+        padding: 30px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 10px;
+      }
+
+      .beranda .input-row-full {
+        width: 100%;
+      }
+      .beranda .input-row-split {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .beranda .input-field-wrapper {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        height: 60px;
+        width: 100%;
+        transition: border 0.2s;
+      }
+
+      .beranda .input-field-wrapper:focus-within {
+        border-color: #000;
+      }
+
+      .beranda .input-field-wrapper svg {
+        width: 24px;
+        height: 24px;
+        color: #000;
+        flex-shrink: 0;
+      }
+
+      .beranda .input-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .beranda .input-content input {
+        border: none;
+        outline: none;
+        font-size: 16px;
+        width: 100%;
+        color: #333;
+      }
+
+      .beranda .input-main-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: #000;
+      }
+      .beranda .input-sub-text {
+        font-size: 12px;
+        color: #888;
+      }
+
+      .beranda .floating-search-btn {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1a1a1a;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        font-weight: 500;
+        width: 300px;
+        justify-content: flex-start;
+        transition: background 0.2s;
+      }
+
+      .beranda .floating-search-btn:hover {
+        background-color: #000;
+      }
+      .beranda .floating-search-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: white;
+      }
+
+      /* CONTENT & GRID */
+      .beranda .content-wrapper {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .beranda .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .beranda .city-tabs {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .beranda .city-tab {
+        padding-bottom: 10px;
+        font-size: 16px;
+        color: #666;
+        cursor: pointer;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .beranda .city-tab.active {
+        color: #000;
+        font-weight: 700;
+      }
+
+      .beranda .city-tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #000;
+      }
+
+      .beranda .see-more {
+        float: right;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+
+      .beranda .studio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding-bottom: 50px;
+      }
+
+      .beranda .studio-card {
+        cursor: pointer;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .beranda .studio-img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        background-color: #eee;
+      }
+
+      .beranda .studio-name {
+        font-weight: 700;
+        font-size: 16px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body class="ph-body-root">
+    <div class="beranda">
+      <div class="header-full-width">
+        <header class="header-top">
+          <div class="photo-hunt">
+            PhotoHunt
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+              ></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+          <div class="nav-icons">
+            <svg
+              class="icon-btn"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+              ></path>
+            </svg>
+            <svg
+              class="icon-btn"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path
+                d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+              ></path>
+            </svg>
+            <svg
+              class="icon-btn"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+              ></path>
+            </svg>
+          </div>
+        </header>
+      </div>
+
+      <section class="hero-section">
+        <div class="search-tabs">
+          <div
+            class="tab-item js-tab-photobox active"
+            onclick="scope.switchCategory('photobox')"
+          >
+            PhotoBox
+          </div>
+          <div
+            class="tab-item js-tab-photostudio"
+            onclick="scope.switchCategory('photostudio')"
+          >
+            PhotoStudio
+          </div>
         </div>
-    </header>
 
-    <main>
-        <!-- Role Switch (Customer/Owner)
-        <div class="role-switch">
-            <button id="customerBtn" class="role-btn active">Pelanggan</button>
-            <button id="ownerBtn" class="role-btn">Pemilik Studio</button>
-        </div> -->
+        <div class="search-box-container">
+          <div class="input-row-full">
+            <div class="input-field-wrapper">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div class="input-content">
+                <input
+                  type="text"
+                  class="js-input-location"
+                  placeholder="Mau foto dimana?"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="input-row-split">
+            <div class="input-field-wrapper">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <div class="input-content">
+                <div class="input-main-text">18 Oktober 2025</div>
+                <div class="input-sub-text">Sabtu</div>
+              </div>
+            </div>
+            <div class="input-field-wrapper">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <div class="input-content">
+                <div class="input-main-text">2 Orang</div>
+                <div class="input-sub-text">Kapasitas</div>
+              </div>
+            </div>
+          </div>
 
-        <!-- Customer View: Search & Results -->
-         
-         <div class="category-tabs">
-            <button class="category-tab active" data-type="photobox">
-            Photobox
-             </button>
-             <button class="category-tab" data-type="photostudio">
-            Photostudio
-             </button>
+          <div class="floating-search-btn js-btn-search">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            Search...
+          </div>
+        </div>
+      </section>
+
+      <main class="content-wrapper">
+        <div class="section-title">Yuk, cek studio yang cocok denganmu!</div>
+
+        <div class="city-tabs">
+          <div
+            class="city-tab active"
+            onclick="scope.filterStudio('bekasi', this)"
+          >
+            Bekasi
+          </div>
+          <div class="city-tab" onclick="scope.filterStudio('jakarta', this)">
+            Jakarta
+          </div>
+          <div class="city-tab" onclick="scope.filterStudio('tangerang', this)">
+            Tangerang
+          </div>
+          <div class="city-tab" onclick="scope.filterStudio('depok', this)">
+            Depok
+          </div>
+          <div style="margin-left: auto" class="see-more js-see-more">
+            Lihat studio (Bekasi) lainnya >
+          </div>
         </div>
 
-        <section id="customerView">
-            <div class="search-bar">
-                <div class="search-inputs">
-                    <div class="input-group">
-                        <label>📍 Lokasi</label>
-                        <input type="text" id="location" placeholder="Bekasi, Jakarta..." value="Jakarta">
-                    </div>
-                </div>
-            <div class="date-people">
-                <div class="input-group">
-                        <label>📅 Tanggal</label>
-                        <input type="date" id="date" value="2025-10-18">
-                    </div>
-                    <div class="input-group">
-                        <label>👥 Orang</label>
-                        <select id="participants">
-                            <option>1</option>
-                            <option selected>2</option>
-                            <option>3+</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="searchBtn">🔍   Cari... </button>
-            </div>
-            
-            <h3 class="search-studio-title" >Yuk, cek studio yang cocok denganmu!</h3>
-            <div class="filters">
-                <button class="filter-chip active" data-location="all">Semua</button>
-                <button class="filter-chip" data-location="bekasi">Bekasi</button>
-                <button class="filter-chip" data-location="jakarta">Jakarta</button>
-                <button class="filter-chip" data-location="tangerang">Tangerang</button>
-                <button class="filter-chip" data-location="depok">Depok</button>
-            </div>
-
-            <div id="results" class="studio-grid">
-            </div>
-        </section>
-
-        <!-- Owner View: Apply Form -->
-        <section id="ownerView" style="display: none;">
-            <h2>Daftar Studio Anda di PhotoHunt</h2>
-            <form id="applyForm">
-                <input type="text" placeholder="Nama Studio" required>
-                <input type="text" placeholder="Lokasi (e.g., Bekasi)" required>
-                <textarea placeholder="Deskripsi & Fasilitas" required></textarea>
-                <input type="file" id="studioPhoto" multiple accept="image/*" required>
-                <input type="email" placeholder="Email Kontak" required>
-                <button type="submit">Kirim Aplikasi</button>
-            </form>
-        </section>
-    </main>
-
-    <!-- Modal for Studio Detail/Reservation -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="modalBody">
-            </div>
-        </div>
+        <div class="studio-grid js-studio-container"></div>
+      </main>
     </div>
 
-    <script src="js/app.js" defer></script>
-</body>
+    <script>
+      const scope = (function () {
+        const root = document.querySelector(".beranda");
+        let currentCategory = "photobox";
+        let currentCity = "bekasi";
+
+        const studiosDB = [
+          {
+            name: "Selfie Time, Mal Lippo Cikarang.",
+            city: "bekasi",
+            category: "photobox",
+            img: "https://placehold.co/600x350/png?text=Selfie+Time",
+          },
+          {
+            name: "DirtyLine Studio, Tambun.",
+            city: "bekasi",
+            category: "photobox",
+            img: "https://placehold.co/600x350/png?text=DirtyLine",
+          },
+          {
+            name: "Angel Studios, Bekasi Timur.",
+            city: "bekasi",
+            category: "photobox",
+            img: "https://placehold.co/600x350/png?text=Angel+Studios",
+          },
+
+          {
+            name: "Sejiwa Studio Pro, Galaxy.",
+            city: "bekasi",
+            category: "photostudio",
+            img: "https://placehold.co/600x350/333/fff?text=Sejiwa+Studio",
+          },
+          {
+            name: "Fana Potret Keluarga, Summarecon.",
+            city: "bekasi",
+            category: "photostudio",
+            img: "https://placehold.co/600x350/333/fff?text=Fana+Potret",
+          },
+
+          {
+            name: "Photomatics, Blok M Square.",
+            city: "jakarta",
+            category: "photobox",
+            img: "https://placehold.co/600x350/png?text=Photomatics+JKT",
+          },
+
+          {
+            name: "Kencana Photo Studio, Tebet.",
+            city: "jakarta",
+            category: "photostudio",
+            img: "https://placehold.co/600x350/333/fff?text=Kencana+Photo",
+          },
+
+          {
+            name: "BSD PhotoCorner.",
+            city: "tangerang",
+            category: "photobox",
+            img: "https://placehold.co/600x350/png?text=BSD+Corner",
+          },
+        ];
+
+        const select = (selector) => root.querySelector(selector);
+        const selectAll = (selector) => root.querySelectorAll(selector);
+
+        function renderStudios() {
+          const container = select(".js-studio-container");
+
+          container.innerHTML = "";
+
+          const filteredData = studiosDB.filter((item) => {
+            return (
+              item.category === currentCategory && item.city === currentCity
+            );
+          });
+
+          if (filteredData.length === 0) {
+            container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Belum ada studio di kategori ini :(</div>`;
+          }
+
+          filteredData.forEach((item) => {
+            const card = document.createElement("div");
+            card.className = "studio-card";
+
+            card.innerHTML = `
+        <img src="${item.img}" class="studio-img" alt="${item.name}">
+        <div class="studio-name">${item.name}</div>
+      `;
+
+            container.appendChild(card);
+          });
+
+          const cityName =
+            currentCity.charAt(0).toUpperCase() + currentCity.slice(1);
+          const catName =
+            currentCategory === "photobox" ? "PhotoBox" : "PhotoStudio";
+          select(
+            ".js-see-more"
+          ).innerText = `Lihat ${catName} (${cityName}) lainnya >`;
+        }
+
+        function switchCategory(cat) {
+          currentCategory = cat;
+          select(".js-tab-photobox").classList.remove("active");
+          select(".js-tab-photostudio").classList.remove("active");
+
+          if (cat === "photobox")
+            select(".js-tab-photobox").classList.add("active");
+          if (cat === "photostudio")
+            select(".js-tab-photostudio").classList.add("active");
+
+          renderStudios();
+        }
+
+        function filterStudio(city, element) {
+          currentCity = city.toLowerCase();
+          const tabs = selectAll(".city-tab");
+          tabs.forEach((t) => t.classList.remove("active"));
+          if (element) element.classList.add("active");
+          renderStudios();
+        }
+
+        const btnSearch = select(".js-btn-search");
+        if (btnSearch) {
+          btnSearch.onclick = () => {
+            const inputVal = select(".js-input-location").value.toLowerCase();
+            const validCities = ["jakarta", "bekasi", "tangerang", "depok"];
+
+            const foundCity = validCities.find((c) => inputVal.includes(c));
+
+            if (foundCity) {
+              const tabs = selectAll(".city-tab");
+              tabs.forEach((tab) => {
+                if (tab.innerText.toLowerCase() === foundCity) {
+                  filterStudio(foundCity, tab);
+                }
+              });
+            } else {
+              alert(
+                "Mencari '" +
+                  inputVal +
+                  "'... (Coba ketik 'Jakarta' atau 'Bekasi')"
+              );
+            }
+          };
+        }
+
+        renderStudios();
+
+        return { switchCategory, filterStudio };
+      })();
+    </script>
+  </body>
 </html>

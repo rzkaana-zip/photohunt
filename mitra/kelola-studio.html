@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kelola Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="mitra-header">
+  <button class="mitra-back-btn" onclick="history.back()" aria-label="Kembali">
+    <svg class="mitra-back-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M19 12H5M12 19l-7-7 7-7"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <h1 class="mitra-header-title">Kelola Studio</h1>
+</div>
+
+<div class="mitra-edit-page">
+  <div class="mitra-wrap">
+
+    <div class="mitra-info">
+      <span class="mitra-info-icon">ⓘ</span>
+      <span>
+        <strong>Informasi:</strong>
+        Setiap akun Mitra hanya dapat mendaftarkan 1 studio.
+        Anda dapat mengedit informasi studio Anda kapan saja.
+      </span>
+    </div>
+
+    <div class="mitra-card" id="studioCard">
+
+      <div class="mitra-image">
+        <span class="mitra-badge" id="studioType">PhotoBox</span>
+      </div>
+
+      <div class="mitra-content">
+
+        <div class="mitra-name" id="studioName">-</div>
+
+        <div class="mitra-address" id="studioAddress">-</div>
+
+        <div class="mitra-rating">
+          <span id="studioRating">⭐ 0.0</span>
+          <span class="mitra-review" id="studioReview">0 ulasan</span>
+        </div>
+
+        <div class="mitra-price">
+          <div class="mitra-label">Paket Harga:</div>
+          <div id="studioPrice">-</div>
+        </div>
+
+        <div class="mitra-paket">
+          <div class="mitra-label">Paket Tersedia:</div>
+          <div class="mitra-tags" id="studioPackages"></div>
+        </div>
+
+        <div class="mitra-actions">
+          <button type="button"
+                  class="mitra-btn mitra-btn-outline"
+                  id="previewStudioBtn">
+            👁 Preview
+          </button>
+          <button type="button"
+                  class="mitra-btn mitra-btn-primary"
+                  id="editStudioBtn">
+            ✎ Edit
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const mitraId = localStorage.getItem("activeMitraId") || "mitra_001";
+
+const studioName = document.getElementById("studioName");
+const studioAddress = document.getElementById("studioAddress");
+const studioPrice = document.getElementById("studioPrice");
+const studioPackages = document.getElementById("studioPackages");
+const studioRating = document.getElementById("studioRating");
+const studioReview = document.getElementById("studioReview");
+const editStudioBtn = document.getElementById("editStudioBtn");
+const previewStudioBtn = document.getElementById("previewStudioBtn");
+
+function loadStudio() {
+  const allData = JSON.parse(localStorage.getItem("photohuntStudios")) || {};
+  const studio = allData[mitraId];
+
+  if (!studio) {
+    studioName.textContent = "Belum ada studio";
+    studioAddress.textContent = "Silakan lengkapi data studio Anda";
+    studioPrice.textContent = "-";
+    studioPackages.innerHTML = "";
+    return;
+  }
+
+  studioName.textContent = studio.name || "-";
+  studioAddress.textContent = studio.address || "-";
+  studioPrice.textContent = studio.price || "-";
+
+  studioRating.textContent = "⭐ 5.0";
+  studioReview.textContent = "0 ulasan";
+
+  studioPackages.innerHTML = "";
+  (studio.packages || ["Paket Single"]).forEach(paket => {
+    const tag = document.createElement("span");
+    tag.className = "mitra-tag";
+    tag.textContent = paket;
+    studioPackages.appendChild(tag);
+  });
+}
+
+editStudioBtn.addEventListener("click", () => {
+  localStorage.setItem("activeMitraId", mitraId);
+  window.location.href = "edit-studio-mitra.html";
+});
+
+previewStudioBtn.addEventListener("click", () => {
+  localStorage.setItem("activeMitraId", mitraId);
+  window.location.href = "preview-studio-mitra.html";
+});
+
+loadStudio();
+</script>
+
+</body>
+</html>
