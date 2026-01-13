@@ -480,57 +480,6 @@
     </main>
   </div>
 
-  <script>
-    const orderData = {
-      orderId: "PHB-2025-001247",
-      status: "CONFIRMED",
-      studio: {
-        name: "PINARAC STUDIO, BEKASI",
-        address: "Jl. MH. Thamrin Lantai 1, Cibatu, Cikarang Sel., Kabupaten Bekasi, Jawa Barat 17550",
-        rating: "⭐ 4.8 (124 reviews)",
-        image: "https://via.placeholder.com/140x120"
-      },
-      customer: { name: "Jennifer" },
-      booking: {
-        package: "Self Photo Basic",
-        date: "Rabu, 10 Desember 2025",
-        time: "13:00 - 14:00",
-        people: "4 orang"
-      },
-      payment: {
-        packagePrice: "Rp 300.000",
-        extraPrice: "Rp 50.000",
-        total: "Rp 350.000"
-      },
-      qr: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PHB-2025-001247"
-    };
-
-    function renderOrder(data) {
-      document.getElementById("orderId").textContent = data.orderId;
-      document.getElementById("orderStatus").textContent = data.status;
-
-      document.getElementById("studioName").textContent = data.studio.name;
-      document.getElementById("studioAddress").textContent = data.studio.address;
-      document.getElementById("studioRating").textContent = data.studio.rating;
-      document.getElementById("studioImage").src = data.studio.image;
-
-      document.getElementById("customerName").textContent = data.customer.name;
-      document.getElementById("packageName").textContent = data.booking.package;
-      document.getElementById("bookingDate").textContent = data.booking.date;
-      document.getElementById("bookingTime").textContent = data.booking.time;
-      document.getElementById("peopleCount").textContent = data.booking.people;
-
-      document.getElementById("packagePrice").textContent = data.payment.packagePrice;
-      document.getElementById("extraPrice").textContent = data.payment.extraPrice;
-      document.getElementById("totalPrice").textContent = data.payment.total;
-
-      document.getElementById("qrImage").src = data.qr;
-    }
-
-    renderOrder(orderData);
-
-    document.getElementById("cancelOrderBtn").onclick = () => console.log("Cancel Clicked");
-    document.getElementById("reviewOrderBtn").onclick = () => console.log("Review Clicked");
-  </script>
+ 
 </body>
 </html>

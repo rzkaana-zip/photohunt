@@ -1,4 +1,3 @@
-<script>
 const mitraId = localStorage.getItem("activeMitraId") || "mitra_001";
 
 const previewTitle = document.getElementById("previewTitle");
@@ -40,4 +39,3 @@ closePreview.addEventListener("click", () => {
 });
 
 loadPreviewStudio();
-</script>

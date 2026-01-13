@@ -140,3 +140,30 @@ const packages = [
         document.addEventListener('DOMContentLoaded', function() {
             renderPackages(packages); 
         });
+document.addEventListener("DOMContentLoaded", () => {
+    const reserveBtn = document.querySelector(".reserve-button");
+
+    if (!reserveBtn) return;
+
+    reserveBtn.addEventListener("click", () => {
+        // ambil data yang sudah ada di halaman
+        const date = document.getElementById("dateInput")?.value || "";
+        const people = document.getElementById("peopleSelect")?.value || "";
+
+        // ambil paket dari URL (kalau datang dari klik paket)
+        const params = new URLSearchParams(window.location.search);
+        const paketId = params.get("paket") || "";
+        const paketNama = params.get("nama") || "";
+
+        // susun query string
+        const query = new URLSearchParams({
+            date,
+            people,
+            paket: paketId,
+            nama: paketNama
+        }).toString();
+
+        // redirect
+        window.location.href = `reservasi.html?${query}`;
+    });
+});
