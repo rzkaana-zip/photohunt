@@ -1,110 +1,135 @@
-let db;
+    let db;
+    const DB_NAME = 'PhotoHuntAuth';
+    const DB_VERSION = 2; 
+    const USER_STORE = 'users';
 
-const request = indexedDB.open('PhotoHuntAuth', 1);
+    // Data Default (Auto-Seed)
+    const defaultUser = {
+        name: "Emma Collins", 
+        username: "emmacollins",
+        email: "emma.collins@gmail.com",
+        password: "password123",
+        location: "Indonesia",
+        gender: "Female",
+        birthday: "2006-12-22"
+    };
 
-request.onsuccess = (e) => {
-  db = e.target.result;
-  loadProfile();
-};
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-request.onerror = () => {
-  console.error("Gagal membuka database");
-};
+    // 1. Initial Setup
+    request.onupgradeneeded = (e) => {
+        db = e.target.result;
+        if (db.objectStoreNames.contains(USER_STORE)) {
+            db.deleteObjectStore(USER_STORE);
+        }
+        const objectStore = db.createObjectStore(USER_STORE, { keyPath: 'email' });
+        
+        console.log("Database initialized. Seeding default data...");
+        objectStore.add(defaultUser);
+    };
 
+    request.onsuccess = (e) => {
+        db = e.target.result;
+        console.log("Database connected.");
+        
+        const transaction = db.transaction(USER_STORE, 'readwrite');
+        const store = transaction.objectStore(USER_STORE);
+        const countRequest = store.count();
 
-function loadProfile() {
-  const userData = localStorage.getItem('currentUser');
-  if (!userData) {
-    window.location.href = 'login.html';
-    return;
-  }
+        countRequest.onsuccess = () => {
+            if (countRequest.result === 0) {
+                store.add(defaultUser);
+                localStorage.setItem('currentUser', JSON.stringify(defaultUser));
+                loadProfile();
+            } else {
+                if (!localStorage.getItem('currentUser')) {
+                    localStorage.setItem('currentUser', JSON.stringify(defaultUser));
+                }
+                loadProfile();
+            }
+        };
+    };
 
-  const user = JSON.parse(userData);
+    request.onerror = (e) => {
+        console.error("Database Error:", e.target.error);
+    };
 
-  document.querySelector('.profile-header h3').innerText = user.name;
-  document.querySelector('.profile-header p').innerText = user.email;
+    function loadProfile() {
+        const userDataString = localStorage.getItem('currentUser');
+        if (!userDataString) return;
 
-  const inputs = document.querySelectorAll('.profile-form input, .profile-form select');
+        const user = JSON.parse(userDataString);
+        populateForm(user);
+    }
 
-  inputs[0].value = user.name || '';
-  inputs[1].value = user.username || user.email.split('@')[0];
-  inputs[2].value = user.email;
-  inputs[3].value = user.location || '';
-  inputs[4].value = user.gender || '';
-  inputs[5].value = user.birthday || '';
-}
+    function populateForm(user) {
+        document.getElementById('display-name-header').innerText = user.name || 'User';
+        document.getElementById('display-email-header').innerText = user.email || '';
+        if(user.photoUrl) document.getElementById('avatar-img').src = user.photoUrl;
 
+        document.getElementById('input-name').value = user.name || ''; 
+        document.getElementById('input-username').value = user.username || '';
+        
+        const emailInput = document.getElementById('input-email');
+        emailInput.value = user.email || ''; 
+        emailInput.readOnly = true; 
+        emailInput.classList.add('input-disabled');
 
-const profileBtn = document.querySelectorAll('.profile-btn')[0];
+        document.getElementById('input-location').value = user.location || '';
+        document.getElementById('input-gender').value = user.gender || ''; 
+        document.getElementById('input-birthday').value = user.birthday || '';
+    }
 
-profileBtn.addEventListener('click', () => {
-  const inputs = document.querySelectorAll('.profile-form input, .profile-form select');
+    document.getElementById('btn-save-profile').addEventListener('click', () => {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) return alert("Error: Sesi hilang.");
 
-  const updatedUser = {
-    ...JSON.parse(localStorage.getItem('currentUser')),
-    name: inputs[0].value.trim(),
-    username: inputs[1].value.trim(),
-    email: inputs[2].value.trim().toLowerCase(),
-    location: inputs[3].value.trim(),
-    gender: inputs[4].value,
-    birthday: inputs[5].value
-  };
+        const updatedUser = {
+            ...currentUser,
+            name: document.getElementById('input-name').value.trim(),
+            username: document.getElementById('input-username').value.trim(),
+            location: document.getElementById('input-location').value.trim(),
+            gender: document.getElementById('input-gender').value,
+            birthday: document.getElementById('input-birthday').value
+        };
 
-  if (!updatedUser.name || !updatedUser.username || !updatedUser.email) {
-    alert('Field bertanda * wajib diisi');
-    return;
-  }
+        const tx = db.transaction(USER_STORE, 'readwrite');
+        const store = tx.objectStore(USER_STORE);
+        const req = store.put(updatedUser);
 
-  const tx = db.transaction('users', 'readwrite');
-  const store = tx.objectStore('users');
+        req.onsuccess = () => {
+            localStorage.setItem('currentUser', JSON.stringify(updatedUser)); 
+            document.getElementById('display-name-header').innerText = updatedUser.name;
+            alert('Database Updated: Profil berhasil diperbarui!');
+        };
+        req.onerror = () => alert('Gagal update database.');
+    });
 
-  store.put(updatedUser).onsuccess = () => {
-    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-    console.log('Profile updated:', updatedUser);
-    alert('Profile berhasil diperbarui');
-  };
-});
+    document.getElementById('btn-save-password').addEventListener('click', () => {
+        const currentPass = document.getElementById('input-curr-pass').value;
+        const newPass = document.getElementById('input-new-pass').value;
+        const confirmPass = document.getElementById('input-conf-pass').value;
 
+        if (!currentPass || !newPass || !confirmPass) return alert('Isi semua field password.');
+        if (newPass.length < 6) return alert('Password minimal 6 karakter.');
+        if (newPass !== confirmPass) return alert('Konfirmasi password tidak cocok.');
 
-const passwordBtn = document.querySelectorAll('.profile-btn')[1];
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (user.password !== currentPass) return alert('Password lama salah!');
 
-passwordBtn.addEventListener('click', () => {
-  const passInputs = document.querySelectorAll("input[type='password']");
-  const currentPass = passInputs[0].value;
-  const newPass = passInputs[1].value;
-  const confirmPass = passInputs[2].value;
+        user.password = newPass;
 
-  if (!currentPass || !newPass || !confirmPass) {
-    alert('Semua field password wajib diisi');
-    return;
-  }
+        const tx = db.transaction(USER_STORE, 'readwrite');
+        const store = tx.objectStore(USER_STORE);
+        const req = store.put(user);
 
-  if (newPass.length < 6) {
-    alert('Password minimal 6 karakter');
-    return;
-  }
+        req.onsuccess = () => {
+            alert('Password berhasil diubah. Silakan login ulang.');
+            localStorage.removeItem('currentUser');
+            location.reload(); 
+        };
+    });
 
-  if (newPass !== confirmPass) {
-    alert('Konfirmasi password tidak cocok');
-    return;
-  }
-
-  const user = JSON.parse(localStorage.getItem('currentUser'));
-
-  if (user.password !== currentPass) {
-    alert('Password lama salah');
-    return;
-  }
-
-  user.password = newPass;
-
-  const tx = db.transaction('users', 'readwrite');
-  const store = tx.objectStore('users');
-
-  store.put(user).onsuccess = () => {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    alert('Password berhasil diubah. Silakan login ulang.');
-    localStorage.removeItem('currentUser');
-    window.location.href = 'login.html';
-  };
-});
+    function redirectToSettings() {
+        window.location.href = 'halaman_pengaturan.html'; 
+    }

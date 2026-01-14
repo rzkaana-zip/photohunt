@@ -1,72 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-      
-      const backBtn = document.getElementById('spBack');
-      if (backBtn) {
-        backBtn.addEventListener('click', () => {
-          if (document.referrer) {
-            window.history.back();
-          } else {
-            console.log("Kembali ke Home"); }
-        });
-      }
+    const langDropdown = document.getElementById('langDropdown');
+    const trigger = langDropdown.querySelector('.st-trigger');
+    const options = langDropdown.querySelectorAll('.st-option');
+    const label = document.getElementById('currentLangLabel');
 
-      const header = document.getElementById('mainHeader');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 10) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
-      });
-
-      const langDropdown = document.getElementById('spLang');
-      const langTrigger = langDropdown.querySelector('.sp-trigger');
-      const langLabel = document.getElementById('spLangLabel');
-      const langOptions = langDropdown.querySelectorAll('.sp-option');
-
-      langTrigger.addEventListener('click', (e) => {
+    trigger.addEventListener('click', (e) => {
         e.stopPropagation();
         langDropdown.classList.toggle('open');
-      });
+    });
 
-      langOptions.forEach(option => {
-        option.addEventListener('click', () => {
-          langOptions.forEach(opt => opt.classList.remove('active'));
-          option.classList.add('active');
-          langLabel.textContent = option.textContent;
-          langDropdown.classList.remove('open');
+    options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            options.forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+            label.innerText = opt.innerText;
+            langDropdown.classList.remove('open');
+            console.log("Language changed to:", opt.dataset.lang);
         });
-      });
+    });
 
-      document.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
         if (!langDropdown.contains(e.target)) {
-          langDropdown.classList.remove('open');
+            langDropdown.classList.remove('open');
         }
-      });
+    });
 
-      const themeBoxes = document.querySelectorAll('.sp-theme-box');
-      themeBoxes.forEach(box => {
+    const themeBoxes = document.querySelectorAll('.st-theme-box');
+    themeBoxes.forEach(box => {
         box.addEventListener('click', () => {
-          themeBoxes.forEach(b => b.classList.remove('active'));
-          box.classList.add('active');
-          console.log('Tema:', box.dataset.theme);
+            themeBoxes.forEach(b => b.classList.remove('active'));
+            box.classList.add('active');
+            console.log("Theme changed to:", box.dataset.theme);
         });
-      });
+    });
 
-      const linkItems = document.querySelectorAll('[data-link]');
-      linkItems.forEach(item => {
-        item.addEventListener('click', () => {
-          const target = item.dataset.link;
-          if(target) window.location.href = target;
-        });
-      });
-
-      const logoutBtn = document.getElementById('spLogout');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-          if(confirm("Apakah anda yakin ingin keluar?")) {
-            alert("Logout berhasil!");
-          }
-        });
-      }
+    document.getElementById('spLogout').addEventListener('click', () => {
+        const confirmLogout = confirm("Apakah Anda yakin ingin keluar?");
+        if (confirmLogout) {
+            alert("Anda telah keluar.");
+             localStorage.removeItem('currentUser'); 
+             window.location.href = 'login.html'; 
+        }
     });

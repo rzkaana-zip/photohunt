@@ -6,87 +6,124 @@
     <title>PhotoHunt – Beranda Customer</title>
 
     <style>
-      .ph-body-root {
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap");
+
+      :root {
+        --ph-header-height: 100px;
+        --ph-bg-gradient: linear-gradient(180deg, #e0e0e0 0%, #f5f5f5 100%);
+        --ph-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      body {
         margin: 0;
         padding: 0;
+        font-family: "Inter", sans-serif;
         background-color: #ffffff;
-        width: 100%;
+        padding-top: var(--ph-header-height);
         min-height: 100vh;
       }
 
-      .beranda {
+      .ph-header {
+        background: var(--ph-bg-gradient);
+        height: var(--ph-header-height);
         width: 100%;
-        min-height: 100vh;
-        background-color: #ffffff;
-        color: #000;
-        font-family: "Inter", "Segoe UI", sans-serif;
-        position: relative;
-      }
-
-      .beranda div,
-      .beranda header,
-      .beranda section,
-      .beranda main,
-      .beranda input,
-      .beranda button,
-      .beranda svg,
-      .beranda span {
-        margin: 0;
-        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-shadow: var(--ph-shadow);
+        padding: 0 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         box-sizing: border-box;
       }
 
-      /* HEADER */
-      .beranda .header-full-width {
-        width: 100%;
-        background: linear-gradient(180deg, #d9d9d9 0%, #ffffff 90%);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-
-      .beranda .header-top {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 15px 20px;
+      .ph-header-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
       }
 
-      .beranda .photo-hunt {
-        color: #000000;
-        font-family: "Inter", sans-serif;
-        font-size: 32px;
-        font-weight: 600;
+      .ph-logo {
+        font-weight: 700;
+        font-size: 28px;
         display: flex;
         align-items: center;
-        gap: 10px;
-      }
-
-      .beranda .nav-icons {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-      }
-
-      .beranda .icon-btn {
-        width: 32px;
-        height: 32px;
+        color: #000;
+        letter-spacing: -0.02em;
+        text-decoration: none;
         cursor: pointer;
-        stroke-width: 2;
-        transition: opacity 0.2s, transform 0.2s;
+        transition: opacity 0.2s ease;
       }
 
-      .beranda .icon-btn:hover {
+      .ph-logo:hover {
         opacity: 0.7;
-        transform: scale(1.05);
       }
 
-      .beranda .hero-section {
+      .ph-logo svg {
+        margin-left: 8px;
+        width: 28px;
+        height: 28px;
+      }
+
+      .ph-nav-icons {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .ph-nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #000;
+      }
+
+      .ph-icon-btn {
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        stroke: #000;
+        stroke-width: 2;
+        fill: none;
+        transition: all 0.2s ease;
+      }
+
+      .ph-icon-btn:hover {
+        transform: translateY(-2px);
+        opacity: 0.6;
+      }
+
+      @media (max-width: 768px) {
+        .ph-header {
+          padding: 0 20px;
+          height: 80px;
+        }
+        body {
+          padding-top: 80px;
+        }
+        .ph-logo {
+          font-size: 24px;
+        }
+        .ph-icon-btn {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      .beranda div,
+      .beranda section,
+      .beranda main,
+      .beranda input,
+      .beranda svg,
+      .beranda select {
+        box-sizing: border-box;
+      }
+
+      .hero-section {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -95,7 +132,7 @@
         padding-bottom: 60px;
       }
 
-      .beranda .search-tabs {
+      .search-tabs {
         display: flex;
         justify-content: center;
         gap: 100px;
@@ -104,7 +141,7 @@
         z-index: 2;
       }
 
-      .beranda .tab-item {
+      .tab-item {
         font-size: 18px;
         font-weight: 700;
         padding-bottom: 10px;
@@ -114,11 +151,11 @@
         transition: color 0.2s;
       }
 
-      .beranda .tab-item.active {
+      .tab-item.active {
         color: #000;
       }
 
-      .beranda .tab-item.active::after {
+      .tab-item.active::after {
         content: "";
         position: absolute;
         bottom: 0;
@@ -129,7 +166,7 @@
         border-radius: 2px;
       }
 
-      .beranda .search-box-container {
+      .search-box-container {
         background: #fff;
         border: 1px solid #e0e0e0;
         border-radius: 16px;
@@ -144,16 +181,16 @@
         margin-top: 10px;
       }
 
-      .beranda .input-row-full {
+      .input-row-full {
         width: 100%;
       }
-      .beranda .input-row-split {
+      .input-row-split {
         display: flex;
         gap: 20px;
         width: 100%;
       }
 
-      .beranda .input-field-wrapper {
+      .input-field-wrapper {
         border: 1px solid #e0e0e0;
         border-radius: 8px;
         padding: 12px 16px;
@@ -165,42 +202,51 @@
         transition: border 0.2s;
       }
 
-      .beranda .input-field-wrapper:focus-within {
+      .input-field-wrapper:focus-within {
         border-color: #000;
       }
-
-      .beranda .input-field-wrapper svg {
+      .input-field-wrapper svg {
         width: 24px;
         height: 24px;
         color: #000;
         flex-shrink: 0;
       }
 
-      .beranda .input-content {
+      .input-content {
         display: flex;
         flex-direction: column;
         width: 100%;
+        justify-content: center;
       }
 
-      .beranda .input-content input {
+      .input-content input,
+      .input-content select {
         border: none;
         outline: none;
         font-size: 16px;
         width: 100%;
         color: #333;
+        background: transparent;
+        font-family: "Inter", sans-serif;
       }
 
-      .beranda .input-main-text {
-        font-size: 14px;
+      .ph-invisible-input,
+      .ph-invisible-select {
         font-weight: 600;
+        font-size: 14px;
         color: #000;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
       }
-      .beranda .input-sub-text {
+
+      .input-sub-text {
         font-size: 12px;
         color: #888;
+        margin-top: 2px;
       }
 
-      .beranda .floating-search-btn {
+      .floating-search-btn {
         position: absolute;
         bottom: -25px;
         left: 50%;
@@ -219,37 +265,33 @@
         justify-content: flex-start;
         transition: background 0.2s;
       }
-
-      .beranda .floating-search-btn:hover {
+      .floating-search-btn:hover {
         background-color: #000;
       }
-      .beranda .floating-search-btn svg {
+      .floating-search-btn svg {
         width: 20px;
         height: 20px;
         stroke: white;
       }
 
-      /* CONTENT & GRID */
-      .beranda .content-wrapper {
+      .content-wrapper {
         max-width: 1200px;
         margin: 40px auto;
         padding: 0 20px;
       }
-
-      .beranda .section-title {
+      .section-title {
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 20px;
       }
-
-      .beranda .city-tabs {
+      .city-tabs {
         display: flex;
         gap: 30px;
         margin-bottom: 30px;
         border-bottom: 2px solid #f0f0f0;
       }
 
-      .beranda .city-tab {
+      .city-tab {
         padding-bottom: 10px;
         font-size: 16px;
         color: #666;
@@ -257,13 +299,11 @@
         font-weight: 500;
         position: relative;
       }
-
-      .beranda .city-tab.active {
+      .city-tab.active {
         color: #000;
         font-weight: 700;
       }
-
-      .beranda .city-tab.active::after {
+      .city-tab.active::after {
         content: "";
         position: absolute;
         bottom: -2px;
@@ -273,7 +313,7 @@
         background: #000;
       }
 
-      .beranda .see-more {
+      .see-more {
         float: right;
         font-size: 14px;
         font-weight: 600;
@@ -282,19 +322,22 @@
         align-items: center;
       }
 
-      .beranda .studio-grid {
+      .studio-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
         padding-bottom: 50px;
       }
 
-      .beranda .studio-card {
+      .studio-card {
         cursor: pointer;
         animation: fadeIn 0.3s ease;
+        transition: transform 0.2s;
       }
-
-      .beranda .studio-img {
+      .studio-card:hover {
+        transform: translateY(-5px);
+      }
+      .studio-img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
@@ -302,8 +345,7 @@
         margin-bottom: 10px;
         background-color: #eee;
       }
-
-      .beranda .studio-name {
+      .studio-name {
         font-weight: 700;
         font-size: 16px;
       }
@@ -321,34 +363,31 @@
     </style>
   </head>
 
-  <body class="ph-body-root">
-    <div class="beranda">
-      <div class="header-full-width">
-        <header class="header-top">
-          <div class="photo-hunt">
-            PhotoHunt
+  <body>
+    <header class="ph-header">
+      <div class="ph-header-content">
+        <div class="ph-logo" onclick="window.location.reload()">
+          PhotoHunt
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+            ></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </div>
+
+        <div class="ph-nav-icons">
+          <a href="pengaturan.html" class="ph-nav-link">
             <svg
-              width="36"
-              height="36"
+              class="ph-icon-btn"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
-              ></path>
-              <circle cx="12" cy="13" r="4"></circle>
-            </svg>
-          </div>
-          <div class="nav-icons">
-            <svg
-              class="icon-btn"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
@@ -357,25 +396,24 @@
                 d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
               ></path>
             </svg>
+          </a>
+
+          <a href="history.html" class="ph-nav-link">
             <svg
-              class="icon-btn"
+              class="ph-icon-btn"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path
-                d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
-              ></path>
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
+          </a>
+
+          <a href="chat.html" class="ph-nav-link">
             <svg
-              class="icon-btn"
+              class="ph-icon-btn"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
@@ -383,10 +421,12 @@
                 d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
               ></path>
             </svg>
-          </div>
-        </header>
+          </a>
+        </div>
       </div>
+    </header>
 
+    <div class="beranda">
       <section class="hero-section">
         <div class="search-tabs">
           <div
@@ -426,6 +466,7 @@
               </div>
             </div>
           </div>
+
           <div class="input-row-split">
             <div class="input-field-wrapper">
               <svg
@@ -442,10 +483,11 @@
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
               <div class="input-content">
-                <div class="input-main-text">18 Oktober 2025</div>
-                <div class="input-sub-text">Sabtu</div>
+                <input type="date" class="ph-invisible-input js-input-date" />
+                <div class="input-sub-text">Tanggal Booking</div>
               </div>
             </div>
+
             <div class="input-field-wrapper">
               <svg
                 viewBox="0 0 24 24"
@@ -459,7 +501,15 @@
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               <div class="input-content">
-                <div class="input-main-text">2 Orang</div>
+                <select class="ph-invisible-select js-input-pax">
+                  <option value="1">1 Orang</option>
+                  <option value="2" selected>2 Orang</option>
+                  <option value="3">3 Orang</option>
+                  <option value="4">4 Orang</option>
+                  <option value="5">5 Orang</option>
+                  <option value="6">6 - 10 Orang</option>
+                  <option value="10+">Lebih dari 10</option>
+                </select>
                 <div class="input-sub-text">Kapasitas</div>
               </div>
             </div>
@@ -484,7 +534,6 @@
 
       <main class="content-wrapper">
         <div class="section-title">Yuk, cek studio yang cocok denganmu!</div>
-
         <div class="city-tabs">
           <div
             class="city-tab active"
@@ -505,161 +554,10 @@
             Lihat studio (Bekasi) lainnya >
           </div>
         </div>
-
         <div class="studio-grid js-studio-container"></div>
       </main>
     </div>
 
-    <script>
-      const scope = (function () {
-        const root = document.querySelector(".beranda");
-        let currentCategory = "photobox";
-        let currentCity = "bekasi";
-
-        const studiosDB = [
-          {
-            name: "Selfie Time, Mal Lippo Cikarang.",
-            city: "bekasi",
-            category: "photobox",
-            img: "https://placehold.co/600x350/png?text=Selfie+Time",
-          },
-          {
-            name: "DirtyLine Studio, Tambun.",
-            city: "bekasi",
-            category: "photobox",
-            img: "https://placehold.co/600x350/png?text=DirtyLine",
-          },
-          {
-            name: "Angel Studios, Bekasi Timur.",
-            city: "bekasi",
-            category: "photobox",
-            img: "https://placehold.co/600x350/png?text=Angel+Studios",
-          },
-
-          {
-            name: "Sejiwa Studio Pro, Galaxy.",
-            city: "bekasi",
-            category: "photostudio",
-            img: "https://placehold.co/600x350/333/fff?text=Sejiwa+Studio",
-          },
-          {
-            name: "Fana Potret Keluarga, Summarecon.",
-            city: "bekasi",
-            category: "photostudio",
-            img: "https://placehold.co/600x350/333/fff?text=Fana+Potret",
-          },
-
-          {
-            name: "Photomatics, Blok M Square.",
-            city: "jakarta",
-            category: "photobox",
-            img: "https://placehold.co/600x350/png?text=Photomatics+JKT",
-          },
-
-          {
-            name: "Kencana Photo Studio, Tebet.",
-            city: "jakarta",
-            category: "photostudio",
-            img: "https://placehold.co/600x350/333/fff?text=Kencana+Photo",
-          },
-
-          {
-            name: "BSD PhotoCorner.",
-            city: "tangerang",
-            category: "photobox",
-            img: "https://placehold.co/600x350/png?text=BSD+Corner",
-          },
-        ];
-
-        const select = (selector) => root.querySelector(selector);
-        const selectAll = (selector) => root.querySelectorAll(selector);
-
-        function renderStudios() {
-          const container = select(".js-studio-container");
-
-          container.innerHTML = "";
-
-          const filteredData = studiosDB.filter((item) => {
-            return (
-              item.category === currentCategory && item.city === currentCity
-            );
-          });
-
-          if (filteredData.length === 0) {
-            container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Belum ada studio di kategori ini :(</div>`;
-          }
-
-          filteredData.forEach((item) => {
-            const card = document.createElement("div");
-            card.className = "studio-card";
-
-            card.innerHTML = `
-        <img src="${item.img}" class="studio-img" alt="${item.name}">
-        <div class="studio-name">${item.name}</div>
-      `;
-
-            container.appendChild(card);
-          });
-
-          const cityName =
-            currentCity.charAt(0).toUpperCase() + currentCity.slice(1);
-          const catName =
-            currentCategory === "photobox" ? "PhotoBox" : "PhotoStudio";
-          select(
-            ".js-see-more"
-          ).innerText = `Lihat ${catName} (${cityName}) lainnya >`;
-        }
-
-        function switchCategory(cat) {
-          currentCategory = cat;
-          select(".js-tab-photobox").classList.remove("active");
-          select(".js-tab-photostudio").classList.remove("active");
-
-          if (cat === "photobox")
-            select(".js-tab-photobox").classList.add("active");
-          if (cat === "photostudio")
-            select(".js-tab-photostudio").classList.add("active");
-
-          renderStudios();
-        }
-
-        function filterStudio(city, element) {
-          currentCity = city.toLowerCase();
-          const tabs = selectAll(".city-tab");
-          tabs.forEach((t) => t.classList.remove("active"));
-          if (element) element.classList.add("active");
-          renderStudios();
-        }
-
-        const btnSearch = select(".js-btn-search");
-        if (btnSearch) {
-          btnSearch.onclick = () => {
-            const inputVal = select(".js-input-location").value.toLowerCase();
-            const validCities = ["jakarta", "bekasi", "tangerang", "depok"];
-
-            const foundCity = validCities.find((c) => inputVal.includes(c));
-
-            if (foundCity) {
-              const tabs = selectAll(".city-tab");
-              tabs.forEach((tab) => {
-                if (tab.innerText.toLowerCase() === foundCity) {
-                  filterStudio(foundCity, tab);
-                }
-              });
-            } else {
-              alert(
-                "Mencari '" +
-                  inputVal +
-                  "'... (Coba ketik 'Jakarta' atau 'Bekasi')"
-              );
-            }
-          };
-        }
-
-        renderStudios();
-
-        return { switchCategory, filterStudio };
-      })();
-    </script>
+    <script src="js/app-customers.js"></script>
   </body>
 </html>
