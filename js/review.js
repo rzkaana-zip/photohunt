@@ -1,53 +1,55 @@
-        const labels = Array.from(document.querySelectorAll(".stars label"));
-        const radios = Array.from(document.querySelectorAll(".stars input"));
-        const review = document.getElementById("review");
-        const sendBtn = document.getElementById("sendBtn");
+const labels = Array.from(document.querySelectorAll(".stars label"));
+const radios = Array.from(document.querySelectorAll(".stars input"));
+const review = document.getElementById("review");
+const sendBtn = document.getElementById("sendBtn");
 
-        function setRating(value) {
-            const radio = document.querySelector(`.stars input[value="${value}"]`);
-            if (radio) radio.checked = true;
+function setRating(value) {
+    const radio = document.querySelector(`.stars input[value="${value}"]`);
+    if (radio) radio.checked = true;
 
-            labels.forEach(lbl => {
-                const v = Number(lbl.dataset.value);
-                lbl.classList.toggle("active", v <= value);
-            });
+    labels.forEach(lbl => {
+        const v = Number(lbl.dataset.value);
+        lbl.classList.toggle("active", v <= value);
+    });
 
-            updateButton();
-        }
+    updateButton();
+}
 
-        function getRating() {
-            const checked = radios.find(r => r.checked);
-            return checked ? Number(checked.value) : 0;
-        }
+function getRating() {
+    const checked = radios.find(r => r.checked);
+    return checked ? Number(checked.value) : 0;
+}
 
-        function updateButton() {
-            const rating = getRating();
-            const ok = rating > 0; 
-            
-            sendBtn.disabled = !ok;
-        }
+function updateButton() {
+    const rating = getRating();
+    const ok = rating > 0;
 
-        labels.forEach(lbl => {
-            lbl.addEventListener("click", () => setRating(Number(lbl.dataset.value)));
-        });
+    sendBtn.disabled = !ok;
+}
 
-        radios.forEach(r => {
-            r.addEventListener("change", () => setRating(Number(r.value)));
-        });
+labels.forEach(lbl => {
+    lbl.addEventListener("click", () => setRating(Number(lbl.dataset.value)));
+});
 
-        sendBtn.addEventListener("click", () => {
-            const rating = getRating();
-            const text = review.value.trim();
+radios.forEach(r => {
+    r.addEventListener("change", () => setRating(Number(r.value)));
+});
 
-            if (rating === 0) return; 
+sendBtn.addEventListener("click", () => {
+    const rating = getRating();
+    const text = review.value.trim();
 
-            console.log("Mengirim Rating:", { rating, ulasan: text });
-            
-            alert(`Terima kasih!\nAnda memberi rating: ${rating} Bintang\nUlasan: ${text || "-"}`);
-            
-            setTimeout(() => {
-                window.location.href = "history.html";
-            }, 500);
-        });
+    if (rating === 0) return;
 
-        setRating(0);
+    const reviewData = {
+        rating: rating,
+        ulasan: text,
+        tanggal: new Date().toLocaleDateString('id-ID')
+    };
+    localStorage.setItem('lastReview', JSON.stringify(reviewData));
+
+    console.log("Mengirim ke server:", reviewData);
+
+    window.location.href = "info-rating.html";
+});
+setRating(0);

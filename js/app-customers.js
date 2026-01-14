@@ -12,8 +12,8 @@
 
 const scope = (function () {
     const root = document.querySelector(".beranda");
-    
-    if (!root) return {}; 
+
+    if (!root) return {};
 
     let currentCategory = "photobox";
     let currentCity = "bekasi";
@@ -39,7 +39,7 @@ const scope = (function () {
 
     function renderStudios() {
         const container = select(".js-studio-container");
-        if (!container) return; 
+        if (!container) return;
 
         container.innerHTML = "";
 
@@ -56,7 +56,7 @@ const scope = (function () {
         filteredData.forEach((item) => {
             const card = document.createElement("div");
             card.className = "studio-card";
-            
+
             card.onclick = () => {
                 if (item.url) window.location.href = item.url;
                 else alert("Halaman untuk " + item.name + " belum disetting.");
@@ -79,12 +79,12 @@ const scope = (function () {
 
     function switchCategory(cat) {
         currentCategory = cat;
-        
+
         const tabBox = select(".js-tab-photobox");
         const tabStudio = select(".js-tab-photostudio");
-        
-        if(tabBox) tabBox.classList.remove("active");
-        if(tabStudio) tabStudio.classList.remove("active");
+
+        if (tabBox) tabBox.classList.remove("active");
+        if (tabStudio) tabStudio.classList.remove("active");
 
         if (cat === "photobox" && tabBox) tabBox.classList.add("active");
         if (cat === "photostudio" && tabStudio) tabStudio.classList.add("active");
