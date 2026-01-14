@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rating</title>
+  <style>
+    :root{
+      --gold:#f5b301;
+      --gray:#cfcfcf;
+    }
+    *{ box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+    body{
+      margin:0;
+      min-height:100vh;
+      background: linear-gradient(#d9d9d9 0%, #f7f7f7 25%, #ffffff 60%);
+      display:flex;
+      justify-content:center;
+      padding:24px;
+    }
+    .card{ width:min(920px, 100%); padding:10px 20px 24px; }
+    .topbar{ position:relative; display:flex; justify-content:center; align-items:center; margin-bottom:14px; }
+    .back{
+      position:absolute; left:0; top:50%; transform:translateY(-50%);
+      width:34px; height:34px; border-radius:50%;
+      border:1px solid #ddd; background:#fff; cursor:pointer;
+      display:grid; place-items:center;
+    }
+    h1{ margin:0; font-size:26px; font-weight:700; }
+    .content{ padding:0 60px; }
+    .subtitle{ text-align:center; font-size:18px; font-weight:600; margin:10px 0; }
+
+    .stars{ display:flex; justify-content:center; gap:16px; margin:10px 0 18px; }
+    .stars input{ position:absolute; opacity:0; pointer-events:none; }
+    .stars label{
+      font-size:46px; cursor:pointer; user-select:none; line-height:1;
+      color: var(--gray);
+      transition: transform .05s ease, color .15s ease;
+    }
+    .stars label:hover{ transform: scale(1.03); }
+    .stars label.active{ color: var(--gold); }
+
+    textarea{
+      width:100%; height:210px; resize:none;
+      padding:14px; font-size:16px;
+      border:1px solid #a9a9a9; border-radius:4px; outline:none;
+      background:#fff;
+    }
+    .actions{ display:flex; justify-content:center; margin-top:18px; }
+    button{
+      width:220px; height:46px; border:none; border-radius:8px;
+      font-weight:700; letter-spacing:.5px;
+      background:#d9d9d9; color:#6b6b6b;
+      cursor:not-allowed;
+    }
+    button.enabled{
+      background:#2b7cff; color:#fff; cursor:pointer;
+    }
+
+    @media (max-width:700px){
+      .content{ padding:0 12px; }
+      .stars label{ font-size:40px; }
+      textarea{ height:180px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="topbar">
+      <button class="back" type="button" aria-label="Kembali" onclick="history.back()">
+        <span>&larr;</span>
+      </button>
+      <h1>Rating</h1>
+    </div>
+
+    <div class="content">
+      <div class="subtitle">Bagaimana Pengalaman Anda ?</div>
+
+      <!-- Rating bintang: kalau pilih bintang ke-2, bintang ke-1 ikut nyala -->
+      <div class="stars" role="radiogroup" aria-label="Rating bintang">
+        <input type="radio" name="rating" id="r1" value="1">
+        <label for="r1" data-value="1" aria-label="1 bintang">★</label>
+
+        <input type="radio" name="rating" id="r2" value="2">
+        <label for="r2" data-value="2" aria-label="2 bintang">★</label>
+
+        <input type="radio" name="rating" id="r3" value="3">
+        <label for="r3" data-value="3" aria-label="3 bintang">★</label>
+
+        <input type="radio" name="rating" id="r4" value="4">
+        <label for="r4" data-value="4" aria-label="4 bintang">★</label>
+
+        <input type="radio" name="rating" id="r5" value="5">
+        <label for="r5" data-value="5" aria-label="5 bintang">★</label>
+      </div>
+
+      <textarea id="review" placeholder="Tulis Ulasan Disini"></textarea>
+
+      <div class="actions">
+        <button id="sendBtn" type="button" disabled>KIRIM</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const labels = Array.from(document.querySelectorAll(".stars label"));
+    const radios = Array.from(document.querySelectorAll(".stars input"));
+    const review = document.getElementById("review");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function setRating(value){
+      const radio = document.querySelector(`.stars input[value="${value}"]`);
+      if (radio) radio.checked = true;
+
+      // nyalakan dari bintang 1 sampai bintang yang dipilih
+      labels.forEach(lbl => {
+        const v = Number(lbl.dataset.value);
+        lbl.classList.toggle("active", v <= value);
+      });
+
+      updateButton();
+    }
+
+    function getRating(){
+      const checked = radios.find(r => r.checked);
+      return checked ? Number(checked.value) : 0;
+    }
+
+    function updateButton(){
+      const rating = getRating();
+      const ok = rating > 0; // kalau mau wajib isi ulasan: rating>0 && review.value.trim().length>0
+      sendBtn.disabled = !ok;
+      sendBtn.classList.toggle("enabled", ok);
+    }
+
+    // klik label (bintang)
+    labels.forEach(lbl => {
+      lbl.addEventListener("click", () => setRating(Number(lbl.dataset.value)));
+    });
+
+    // kalau user pakai keyboard (tab + enter/space)
+    radios.forEach(r => {
+      r.addEventListener("change", () => setRating(Number(r.value)));
+    });
+
+    // default tampil 3 bintang (seperti contoh)
+    setRating(3);
+
+    // optional: update kalau textarea diisi (kalau kamu mau jadikan syarat tombol aktif)
+    review.addEventListener("input", updateButton);
+
+    sendBtn.addEventListener("click", () => {
+      const rating = getRating();
+      const text = review.value.trim();
+
+      alert(`Terkirim!\nRating: ${rating}\nUlasan: ${text || "-"}`);
+
+      // contoh kirim ke backend:
+      // fetch("/api/rating", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ rating, review: text })
+      // });
+    });
+  </script>
+</body>
+</html>
