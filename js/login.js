@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Email:", email);
 
           alert(`Login berhasil sebagai ${currentRole.toUpperCase()}`);
-          window.location.href = "beranda.html";
+          window.location.href = "customer-app.html";
         });
 
         signupBtn.addEventListener("click", () => {
