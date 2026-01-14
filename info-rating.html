@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rating - Sukses</title>
+  <style>
+    *{ box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+    body{
+      margin:0;
+      min-height:100vh;
+      background: linear-gradient(#d9d9d9 0%, #f7f7f7 25%, #ffffff 60%);
+      display:flex;
+      justify-content:center;
+      padding:24px;
+      color:#111;
+    }
+
+    .page{
+      width:min(920px, 100%);
+    }
+
+    .topbar{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:6px 0 18px;
+    }
+
+    .back{
+      position:absolute;
+      left:0;
+      top:50%;
+      transform: translateY(-50%);
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:1px solid #ddd;
+      background:#fff;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+    }
+    .back span{ font-size:18px; line-height:1; }
+
+    h1{
+      margin:0;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .center{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: calc(100vh - 90px);
+    }
+
+    .card{
+      width: min(560px, 92%);
+      background:#efefef;
+      border-radius: 10px;
+      padding: 34px 24px 28px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      text-align:center;
+    }
+
+    .check-wrap{
+      display:flex;
+      justify-content:center;
+      margin-bottom: 14px;
+    }
+
+    .msg{
+      margin: 0 0 22px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .btn{
+      border:none;
+      background:#25c05a;
+      color:#0b0b0b;
+      font-weight: 700;
+      padding: 12px 26px;
+      border-radius: 10px;
+      cursor:pointer;
+      min-width: 190px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+    }
+    .btn:active{ transform: scale(0.99); }
+
+    @media (max-width:600px){
+      h1{ font-size:22px; }
+      .msg{ font-size:16px; }
+      .card{ padding: 28px 18px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <button class="back" type="button" aria-label="Kembali" onclick="history.back()">
+        <span>&larr;</span>
+      </button>
+      <h1>Rating</h1>
+    </div>
+
+    <div class="center">
+      <div class="card" role="status" aria-live="polite">
+        <div class="check-wrap" aria-hidden="true">
+          <!-- Icon cek hijau -->
+          <svg width="54" height="54" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="18" fill="none" stroke="#25c05a" stroke-width="3"/>
+            <path d="M24 32.5l5 5 11-12"
+                  fill="none" stroke="#25c05a" stroke-width="4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <p class="msg">
+          Terimakasih telah memberikan rating!
+        </p>
+
+        <button class="btn" type="button" onclick="goHome()">
+          Halaman Utama
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goHome(){
+      // GANTI ini sesuai halaman utama kamu (misal: index.html / customer-app.html / dll)
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
