@@ -22,7 +22,6 @@ request.onsuccess = (e) => {
     }
 };
 
-// SIGN UP
 const signupForm = document.getElementById('signupForm');
 if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
@@ -45,7 +44,6 @@ if (signupForm) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     alert('Akun berhasil dibuat!');
 
-                    // Redirect sesuai role
                     if (user.role === 'mitra') {
                         window.location.href = 'mitra-dashboard.html';
                     } else {
@@ -57,7 +55,6 @@ if (signupForm) {
     });
 }
 
-// LOGIN
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
@@ -84,7 +81,6 @@ if (loginForm) {
         };
     });
 
-    // Tab Pengguna / Mitra
     document.querySelectorAll('.role-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
@@ -103,7 +99,6 @@ window.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Redirect sesuai role
         if (user.role === 'mitra') {
             if (!window.location.pathname.includes('mitra-dashboard.html')) {
                 window.location.href = 'mitra-dashboard.html';

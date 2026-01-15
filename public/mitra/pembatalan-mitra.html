@@ -1,237 +1,63 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mitra Cancellations</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/style.css"> 
-</head>
-<body>
 
-  <div class="mitra-header">
-  <button class="mitra-back-btn" onclick="history.back()" aria-label="Kembali">
-    <svg class="mitra-back-icon" viewBox="0 0 24 24" fill="none">
-      <path d="M19 12H5M12 19l-7-7 7-7"
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/photohunt-backend/public/style.css" />
+  </head>
+  <body>
+    <div class="mitra-header">
+      <button
+        class="mitra-back-btn"
+        onclick="history.back()"
+        aria-label="Kembali"
+      >
+        <svg class="mitra-back-icon" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M19 12H5M12 19l-7-7 7-7"
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
-            stroke-linejoin="round"/>
-    </svg>
-  </button>
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+      <h1 class="mitra-header-title">Pembatalan Reservasi</h1>
+    </div>
 
-  <h1 class="mitra-header-title">Pembatalan Reservasi</h1>
-  </div>
     <div class="cr-dashboard">
-    
       <div class="cr-content">
-        
         <div class="cr-tabs">
-          <button class="cr-tab cr-tab--active">Semua</button>
-          <button class="cr-tab">Menunggu Proses Refund</button>
-          <button class="cr-tab">Sudah Diproses</button>
+          <button
+            class="cr-tab cr-tab--active"
+            onclick="filterData('all', this)"
+          >
+            Semua
+          </button>
+          <button class="cr-tab" onclick="filterData('pending', this)">
+            Menunggu Proses Refund
+          </button>
+          <button class="cr-tab" onclick="filterData('approved', this)">
+            Sudah Diproses
+          </button>
         </div>
 
-        <div class="cr-list">
-
-          <div class="cr-card" data-id="res_018" data-status="pending">
-            <div class="cr-card__header">
-              <div class="cr-card__meta">
-                <h3 class="cr-card__venue">Selfie Time, Mal Lippo Cikarang</h3>
-                <div class="cr-card__submeta">
-                  <span class="cr-card__id">ID: res_018</span>
-                  <span class="cr-card__separator">•</span>
-                  <span class="cr-card__package">Paket Single</span>
-                </div>
-              </div>
-              <div class="cr-badge cr-badge--pending">Menunggu Persetujuan</div>
-            </div>
-
-            <div class="cr-info-grid">
-              <div class="cr-info-item">
-                <span class="cr-label">Tanggal Reservasi</span>
-                <span class="cr-value">17/12/2025</span>
-                <span class="cr-subvalue">15:00</span>
-              </div>
-              <div class="cr-info-item">
-                <span class="cr-label">Total Harga</span>
-                <span class="cr-value">Rp 25.000</span>
-              </div>
-              <div class="cr-info-item">
-                <span class="cr-label">Jumlah Refund</span>
-                <span class="cr-value cr-text-hangus">DP Hangus</span> 
-              </div>
-            </div>
-
-            <div class="cr-reason">
-              <span class="cr-reason__label">Alasan Pembatalan:</span>
-              <span class="cr-reason__text">Sakit, tidak bisa datang</span>
-            </div>
-            <div class="cr-timestamp">Diajukan: 15/12/2025, 16.20.00</div>
-
-            <div class="cr-bank-details">
-              <div class="cr-bank-header">📌 Informasi Rekening Refund:</div>
-              <div class="cr-bank-info">
-                <div class="cr-bank-row">
-                  <span class="cr-bank-label">Bank:</span>
-                  <span class="cr-bank-value">BNI</span>
-                </div>
-                <div class="cr-bank-row">
-                  <span class="cr-bank-label">No. Rekening:</span>
-                  <span class="cr-bank-value">6667778889</span>
-                </div>
-                <div class="cr-bank-row">
-                  <span class="cr-bank-label">Atas Nama:</span>
-                  <span class="cr-bank-value">Andi Pratama</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="cr-actions">
-              <div class="cr-actions__prompt">
-                <span class="cr-prompt-text">Proses refund untuk customer?</span>
-                <small class="cr-prompt-warning">*Pembatalan &lt; H-2, DP akan hangus</small>
-              </div>
-              <div class="cr-actions__buttons">
-                <button class="cr-btn cr-btn--approve js-approve-btn">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                  Setujui
-                </button>
-                <button class="cr-btn cr-btn--reject js-reject-btn">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                  Tolak
-                </button>
-              </div>
-            </div>
+        <div class="cr-list" id="data-container">
+          <div style="text-align: center; padding: 40px; color: #888">
+            Memuat data pembatalan...
           </div>
-
-          <div class="cr-card" data-id="res_016" data-status="pending">
-            <div class="cr-card__header">
-              <div class="cr-card__meta">
-                <h3 class="cr-card__venue">Selfie Time, Mal Lippo Cikarang</h3>
-                <div class="cr-card__submeta">
-                  <span class="cr-card__id">ID: res_016</span>
-                  <span class="cr-card__separator">•</span>
-                  <span class="cr-card__package">Paket Couple</span>
-                </div>
-              </div>
-              <div class="cr-badge cr-badge--pending">Menunggu Persetujuan</div>
-            </div>
-
-            <div class="cr-info-grid">
-              <div class="cr-info-item">
-                <span class="cr-label">Tanggal Reservasi</span>
-                <span class="cr-value">25/12/2025</span>
-                <span class="cr-subvalue">14:00</span>
-              </div>
-              <div class="cr-info-item">
-                <span class="cr-label">Total Harga</span>
-                <span class="cr-value">Rp 45.000</span>
-              </div>
-              <div class="cr-info-item">
-                <span class="cr-label">Jumlah Refund</span>
-                <span class="cr-value cr-text-refund">Rp 45.000</span> 
-              </div>
-            </div>
-
-            <div class="cr-reason">
-              <span class="cr-reason__label">Alasan Pembatalan:</span>
-              <span class="cr-reason__text">Ada acara keluarga mendadak</span>
-            </div>
-            <div class="cr-timestamp">Diajukan: 15/12/2025, 14.30.00</div>
-
-            <div class="cr-bank-details">
-                <div class="cr-bank-header">📌 Informasi Rekening Refund:</div>
-                <div class="cr-bank-info">
-                  <div class="cr-bank-row">
-                    <span class="cr-bank-label">Bank:</span>
-                    <span class="cr-bank-value">Mandiri</span>
-                  </div>
-                  <div class="cr-bank-row">
-                    <span class="cr-bank-label">No. Rekening:</span>
-                    <span class="cr-bank-value">3334445556</span>
-                  </div>
-                  <div class="cr-bank-row">
-                    <span class="cr-bank-label">Atas Nama:</span>
-                    <span class="cr-bank-value">Rudi Hermawan</span>
-                  </div>
-                </div>
-            </div>
-
-            <div class="cr-actions">
-              <div class="cr-actions__prompt">
-                <span class="cr-prompt-text">Proses refund untuk customer?</span>
-              </div>
-              <div class="cr-actions__buttons">
-                <button class="cr-btn cr-btn--approve js-approve-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                  Setujui
-                </button>
-                <button class="cr-btn cr-btn--reject js-reject-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                  Tolak
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="cr-card" data-id="res_013" data-status="cancelled">
-            <div class="cr-card__header">
-              <div class="cr-card__meta">
-                <h3 class="cr-card__venue">Selfie Time, Mal Lippo Cikarang</h3>
-                <div class="cr-card__submeta">
-                  <span class="cr-card__id">ID: res_013</span>
-                  <span class="cr-card__separator">•</span>
-                  <span class="cr-card__package">Paket Group</span>
-                </div>
-              </div>
-              <div class="cr-badge cr-badge--cancelled">Dibatalkan</div>
-            </div>
-
-            <div class="cr-info-grid">
-              <div class="cr-info-item">
-                <span class="cr-label">Tanggal Reservasi</span>
-                <span class="cr-value">16/12/2025</span>
-                <span class="cr-subvalue">13:00</span>
-              </div>
-              <div class="cr-info-item">
-                <span class="cr-label">Total Harga</span>
-                <span class="cr-value">Rp 75.000</span>
-              </div>
-              <div class="cr-info-item">
-                <span class="cr-label">Jumlah Refund</span>
-                <span class="cr-value">-</span>
-              </div>
-            </div>
-
-            <div class="cr-reason">
-              <span class="cr-reason__label">Alasan Pembatalan:</span>
-              <span class="cr-reason__text">Ada keperluan mendadak yang tidak bisa ditunda</span>
-            </div>
-
-            <div class="cr-footer-status">
-                <div class="cr-timestamp">Dibatalkan: 14/12/2025, 15.20.00</div>
-                <div class="cr-status-tag cr-status-tag--refunded">Dana Dikembalikan</div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
-      <script src="js/pembatalan-mitra.js" defer></script>
-    
-</body>
-</html>  
+
+    <script src="/photohunt-backend/public/js/pembatalan-mitra.js"></script>
+  </body>
+</html>

@@ -97,7 +97,6 @@
         document.getElementById('deadline-info').textContent = `Tuntaskan pembayaran anda sebelum ${hours}:${minutes}`;
     }
 
-    // --- 5. CONFIRMATION & REDIRECT ---
     function confirmPayment() {
         const confirmAction = confirm("Apakah Anda yakin sudah melakukan transfer?");
         if (confirmAction) {

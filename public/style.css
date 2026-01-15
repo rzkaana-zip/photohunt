@@ -841,7 +841,12 @@ page-profile {
   font-family: Inter, system-ui, -apple-system, sans-serif;
   color: #111827;
 }
-
+.loading-state {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+        font-style: italic;
+}
 .mitra-edit-page *,
 .mitra-edit-page *::before,
 .mitra-edit-page *::after {
@@ -1392,164 +1397,6 @@ page-profile {
   justify-content: center;
   background: #000000;
   color: #ffffff;
-}
-
-.mitra-reservasi-page {
-  font-family: Inter, system-ui, sans-serif;
-  background: #f9fafb;
-  padding: 20px;
-  color: #111827;
-}
-
-.mitra-page-title {
-  margin-bottom: 14px;
-}
-
-.mitra-back-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 8px;
-}
-
-.mitra-back-btn:hover {
-  background: #f3f4f6;
-}
-
-.mitra-back-icon {
-  width: 22px;
-  height: 22px;
-  color: #111827;
-}
-
-.mitra-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-.mitra-tab {
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.mitra-tab.active {
-  background: #111827;
-  color: #fff;
-}
-
-.mitra-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 14px;
-}
-
-.mitra-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mitra-title-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.mitra-studio-name {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.mitra-btn-detail {
-  all: unset;
-  padding: 4px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.mitra-badge {
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 999px;
-}
-
-.success {
-  background: #dcfce7;
-  color: #008236;
-}
-.warning {
-  background: #ffedd4;
-  color: #ca3500;
-}
-.info {
-  background: #fef9c2;
-  color: #a65f00;
-}
-.done {
-  background: #dbeafe;
-  color: #1447e6;
-}
-.danger {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.mitra-order-id {
-  font-size: 12px;
-  color: #6b7280;
-  margin: 6px 0 12px;
-}
-
-.mitra-info-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.mitra-info-item .label {
-  display: block;
-  font-size: 11px;
-  color: #6b7280;
-  margin-bottom: 2px;
-}
-
-.mitra-info-item .value {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.mitra-card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.mitra-price .label {
-  font-size: 11px;
-  color: #6b7280;
-  display: block;
-}
-
-.mitra-price .price {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.mitra-actions {
-  display: flex;
-  gap: 8px;
 }
 
 .btn-outline,
